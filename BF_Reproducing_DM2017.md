@@ -1,9 +1,7 @@
 BF vs TOST
 ================
 
-**QUESTIONS** It's unclear to me when one-sided tests and two-sided tests are used in Dienes & Mclatchie, 2017, or is it matters (might be me).
-
-Code is hidden by default - make available by clicking the buttons on the right. Below is the code by Stefan Wiens from: <https://figshare.com/articles/Aladins_Bayes_Factor_in_R/4981154/3>
+Below is the code by Stefan Wiens from: <https://figshare.com/articles/Aladins_Bayes_Factor_in_R/4981154/3>
 
 ``` r
 BF_t<-function(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail = 2)
@@ -656,3 +654,5 @@ BF_t(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail
     ## BF01 =  11.11
 
     ## [1] 0.09
+
+**QUESTIONS** It's unclear to me when one-sided tests and two-sided tests are used in Dienes & Mclatchie, 2017, or is it matters (might be me).
