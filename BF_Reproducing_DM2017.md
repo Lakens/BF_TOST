@@ -1,7 +1,11 @@
 Reproducing Dienes and Mclatchie, 2017
 ================
 
+<<<<<<< HEAD
 The code below reproduces all examples of how to calculate Bayes Factors in Dienes and Mclatchie, 2017, 'Four reasons to prefer Bayesian analyses over significance testing'. Download the full article (\#Open Access) here: <https://link.springer.com/content/pdf/10.3758%2Fs13423-017-1266-z.pdf>
+=======
+The code below reproduces all examples of how to calculate Bayes Factors in Dienes and Mclatchie, 2017, 'Four reasons to prefer Bayesian analyses over significance testing'. Download the full articles (\#Open Access) here: <https://link.springer.com/content/pdf/10.3758%2Fs13423-017-1266-z.pdf>
+>>>>>>> 3f4ec7d25591a640a44eac27d08ecb05d9b64c91
 
 Below is the R code to calculate Bayes factors based on a t-distribution by Stefan Wiens from: <https://figshare.com/articles/Aladins_Bayes_Factor_in_R/4981154/3>
 
