@@ -1,7 +1,9 @@
-BF vs TOST
+Reproducing Dienes and Mclatchie, 2017
 ================
 
-Below is the code by Stefan Wiens from: <https://figshare.com/articles/Aladins_Bayes_Factor_in_R/4981154/3>
+The code below reproduces all examples of how to calculate Bayes Factors in Dienes and Mclatchie, 2017, 'Four reasons to prefer Bayesian analyses over significance testing'. Download the full articles (\#Open Access) here: <https://link.springer.com/content/pdf/10.3758%2Fs13423-017-1266-z.pdf>
+
+Below is the R code to calculate Bayes factors based on a t-distribution by Stefan Wiens from: <https://figshare.com/articles/Aladins_Bayes_Factor_in_R/4981154/3>
 
 ``` r
 BF_t<-function(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail = 2)
@@ -423,7 +425,7 @@ And example 5, using a uniform:
 
     ## [1] 0.2380952
 
-Using Wienes function:
+Using Wiens function:
 
 ``` r
 BF_U<-function(LL, UL, meanobtained, semobtained, dfobtained)
@@ -654,5 +656,3 @@ BF_t(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail
     ## BF01 =  11.11
 
     ## [1] 0.09
-
-**QUESTIONS** It's unclear to me when one-sided tests and two-sided tests are used in Dienes & Mclatchie, 2017, or is it matters (might be me).
