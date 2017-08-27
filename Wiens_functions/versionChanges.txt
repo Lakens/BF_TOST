@@ -1,0 +1,5 @@
+Changes in latest version (1 June 2017):
+> Density for prior and posterior adds to 1.
+> Maximum of likelihood is set to 1.
+> Rounds to 2 significant digits.
+> Clearer plotting scheme.
