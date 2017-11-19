@@ -115,9 +115,8 @@ TOSTtwo<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, var.
   cat("\n")
   cat("TOST confidence interval:\n")
   print(CIresults)
-  invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound_d=low_eqbound_d,high_eqbound_d=high_eqbound_d, LL_CI_TOST=LL90,UL_CI_TOST=UL90))
   #below added BF calc
-  bayes<-TRUE #expect to povide bayes
+  bayes<-TRUE #expect to provide bayes
   if(missing(effect_prior)) {
     bayes<-FALSE #if no prior effect size is provided, BF not calculated
   }
@@ -131,64 +130,55 @@ TOSTtwo<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, var.
       if(missing(se_prior)) {
         se_prior<-effect_prior #if not specified otherwise, default SE is effect
         effect_prior<-0 #halfnormal is centered on 0
-      }
+      } }
+    if(prior_dist=="cauchy") {
+      df_prior<-1
+      {
+        if(missing(se_prior)) 
+        {df_prior<-1
+        se_prior<-effect_prior/2} #if not specified otherwise, default SE is effect
+      }}
+    if(prior_dist=="halfcauchy") {
+      {df_prior<-1}
+      if(missing(se_prior)) {
+        df_prior<-1
+        se_prior<-effect_prior #if not specified otherwise, default SE is effect
+        effect_prior<-0 #halfcauchy is centered on 0
+      }}
+    
+    if(missing(df_prior)) {
+      df_prior<-1000 #if not specified otherwise, default df = 100000 (practically normal)
     }
-  }
-  if(missing(df_prior)) {
-    df_prior<-100000 #if not specified otherwise, default df = 100000 (practically normal)
-  }
-  theta <- effect_prior - 10 * se_prior
-  incr <- se_prior / 200
-  theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
-  dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
-  if(prior_dist=="halfnormal"){
-    dist_theta[theta <= 0] = 0
-  }
-  dist_theta_alt = dist_theta/sum(dist_theta)
-  likelihood <- dt((abs(dif)-theta)/(abs(dif)/abs(t)), df = degree_f) #use abs(dif) - can be set to d
-  likelihood_alt = likelihood/sum(likelihood)
-  height <- dist_theta * likelihood
-  area <- sum(height * incr)
-  normarea <- sum(dist_theta * incr)
-  height_alt = dist_theta_alt * likelihood_alt
-  height_alt = height_alt/sum(height_alt)
-  LikelihoodTheory <- area/normarea
-  LikelihoodNull <- dt(abs(dif)/(abs(dif)/abs(t)), df = degree_f)
-  BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
-  
-  #plot
-  myminY = 1
-  # rescale prior and posterior to sum = 1 (density)
-  dist_theta_alt = dist_theta_alt / (sum(dist_theta_alt)*incr)
-  height_alt = height_alt/(sum(height_alt)*incr)
-  # rescale likelood to maximum = 1
-  likelihood_alt = likelihood_alt / max(likelihood_alt)
-  data = cbind(dist_theta_alt, height_alt)
-  maxy = max(data)
-  max_per_x = apply(data,1,max)
-  max_x_keep = max_per_x/maxy*100 > myminY  # threshold (1%) here
-  x_keep = which(max_x_keep==1)
-  par(bg = "aliceblue")
-  par(mar=c(5, 5, 5, 5))
-  plot(theta, dist_theta_alt, type = "l",
-       ylim = c(0, maxy),
-       xlim = c(theta[head(x_keep,1)], theta[tail(x_keep,1)]),  # change X limits here
-       ylab = "Density (for Prior and Posterior)", xlab = "Theta", col = "grey46", lwd = 2, lty = 2)
-  lines(theta, height_alt, type = "l", col = "black", lwd = 3, lty = 1)
-  theta0 = which(theta == min(theta[theta>0]))
-  points(theta[theta0],dist_theta_alt[theta0], pch = 19, col = "grey46", cex = 1.5)
-  points(theta[theta0],height_alt[theta0], pch = 19, col = "black", cex = 1.5)
-  par(new = T)
-  plot(theta, likelihood_alt, type = "l",
-       ylim = c(0, 1),
-       xlim = c(theta[head(x_keep,1)], theta[tail(x_keep,1)]),  # change X limits here
-       col = "dodgerblue", lwd = 2, lty = 3, axes = F, xlab = NA, ylab = NA)
-  axis(side = 4)
-  mtext(side = 4, line = 3, 'Likelihood')
-  abline(v = theta[theta0], lwd = 2, lty = 3)
-  
-  return(c(BayesFactor, LikelihoodTheory, LikelihoodNull))
-}
+    theta <- effect_prior - 10 * se_prior
+    incr <- se_prior / 200
+    theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
+    dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
+    if(prior_dist=="halfnormal"){
+      dist_theta[theta <= 0] = 0
+    }
+    if(prior_dist=="halfcauchy"){
+      dist_theta[theta <= 0] = 0
+    }
+    dist_theta_alt = dist_theta/sum(dist_theta)
+    likelihood <- dt((abs(dif)-theta)/(abs(dif)/abs(t)), df = degree_f) #use abs(dif) - can be set to d
+    likelihood_alt = likelihood/sum(likelihood)
+    height <- dist_theta * likelihood
+    area <- sum(height * incr)
+    normarea <- sum(dist_theta * incr)
+    height_alt = dist_theta_alt * likelihood_alt
+    height_alt = height_alt/sum(height_alt)
+    LikelihoodTheory <- area/normarea
+    LikelihoodNull <- dt(abs(dif)/(abs(dif)/abs(t)), df = degree_f)
+    BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
+    bayes_results <- data.frame(BayesFactor, LikelihoodTheory, LikelihoodNull)
+    colnames(bayes_results) <- c("Bayes Factor","Likelihood (alternative)","Likelihood (null)")
+    cat("Bayes Results:\n")
+    print(bayes_results)
+    cat("\n")
+    invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound=low_eqbound,high_eqbound=high_eqbound, LL_CI_TOST=LL90,UL_CI_TOST=UL90,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
+    
+  }}
 
-options(scipen=999)
-TOSTtwo(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=TRUE, prior_dist = "normal", effect_prior = 0.5)
+
+TOSTtwo(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=TRUE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
+TOSTtwo(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=TRUE, prior_dist = "halfcauchy", effect_prior = 0.5) # B = 0.25

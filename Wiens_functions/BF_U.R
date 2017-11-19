@@ -1,3 +1,13 @@
+#Example
+LL = 0
+UL = 10
+meanobtained = 12
+semobtained = 5
+dfobtained = 27
+
+BF_U(0, 10, 12, 5, 27)
+
+
 BF_U<-function(LL, UL, meanobtained, semobtained, dfobtained)
 # similar to BF_t (see there for more info) but the H1 is modelled as a uniform.
 # LL = lower limit of uniform
