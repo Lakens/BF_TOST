@@ -160,7 +160,7 @@ TOSTtwo<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, var.
       dist_theta[theta <= 0] = 0
     }
     dist_theta_alt = dist_theta/sum(dist_theta)
-    likelihood <- dt((abs(dif)-theta)/(abs(dif)/abs(t)), df = degree_f) #use abs(dif) - can be set to d
+    likelihood <- dt((dif-theta)/(dif/t), df = degree_f) #use dif - can be set to d
     likelihood_alt = likelihood/sum(likelihood)
     height <- dist_theta * likelihood
     area <- sum(height * incr)
@@ -168,7 +168,7 @@ TOSTtwo<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, var.
     height_alt = dist_theta_alt * likelihood_alt
     height_alt = height_alt/sum(height_alt)
     LikelihoodTheory <- area/normarea
-    LikelihoodNull <- dt(abs(dif)/(abs(dif)/abs(t)), df = degree_f)
+    LikelihoodNull <- dt(dif/(dif/t), df = degree_f)
     BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
     bayes_results <- data.frame(BayesFactor, LikelihoodTheory, LikelihoodNull)
     colnames(bayes_results) <- c("Bayes Factor","Likelihood (alternative)","Likelihood (null)")
@@ -182,3 +182,39 @@ TOSTtwo<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, var.
 
 TOSTtwo(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=TRUE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
 TOSTtwo(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=TRUE, prior_dist = "halfcauchy", effect_prior = 0.5) # B = 0.25
+
+## Checking directionality - Moon and Roeder data
+# means one way
+TOSTtwo(m1  = 0.50,
+        m2  = 0.46,
+        sd1 = 0.18,
+        sd2 = 0.17,
+        n1  = 48,
+        n2  = 53,
+        low_eqbound  = -0.0625,
+        high_eqbound =  0.0625,
+        alpha = .05,
+        prior_dist="halfnormal",
+        effect_prior=0,
+        se_prior=0.05
+)
+# B = 1.47
+
+
+
+
+# means switched around
+TOSTtwo(m1  = 0.46,
+        m2  = 0.50,
+        sd1 = 0.17,
+        sd2 = 0.18,
+        n1  = 53,
+        n2  = 48,
+        low_eqbound  = -0.0625,
+        high_eqbound =  0.0625,
+        alpha = .05,
+        prior_dist="halfnormal",
+        effect_prior=0,
+        se_prior=0.05
+)
+# B = 0.31
