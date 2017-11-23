@@ -38,14 +38,6 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   dif<-(m1-m2)
   testoutcome<-ifelse(pttest<alpha,"significant","non-significant")
   TOSToutcome<-ifelse(ptost<alpha,"significant","non-significant")
-  plot(NA, ylim=c(0,1), xlim=c(min(LL90,low_eqbound)-max(UL90-LL90, high_eqbound-low_eqbound)/10, max(UL90,high_eqbound)+max(UL90-LL90, high_eqbound-low_eqbound)/10), bty="l", yaxt="n", ylab="",xlab="Mean Difference")
-  points(x=dif, y=0.5, pch=15, cex=2)
-  abline(v=high_eqbound, lty=2)
-  abline(v=low_eqbound, lty=2)
-  abline(v=0, lty=2, col="grey")
-  segments(LL90,0.5,UL90,0.5, lwd=3)
-  segments(LL95,0.5,UL95,0.5, lwd=1)
-  title(main=paste("Equivalence bounds ",round(low_eqbound,digits=3)," and ",round(high_eqbound,digits=3),"\nMean difference = ",round(dif,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,sep=""), cex.main=1)
   if(var.equal == TRUE) {
     message(cat("Using alpha = ",alpha," Student's t-test was ",testoutcome,", t(",degree_f,") = ",t,", p = ",pttest,sep=""))
     cat("\n")
@@ -151,7 +143,7 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
     max_per_x = apply(data,1,max)
     max_x_keep = max_per_x/maxy*100 > myminY  # threshold (1%) here
     x_keep = which(max_x_keep==1)
-    par(bg = "aliceblue")
+    #png(file=paste("Fig1.png",sep=""),width=2300,height=2000, units = "px", res = 300)
     plot(NA, ylim=c(0,maxy), xlim=c(min(LL90,low_eqbound)-max(UL90-LL90, high_eqbound-low_eqbound)/5, max(UL90,high_eqbound)+max(UL90-LL90, high_eqbound-low_eqbound)/5), bty="l", yaxt="n", ylab="",xlab="Mean Difference")
     points(x=dif, y=maxy/2, pch=15, cex=2)
     abline(v=high_eqbound, lty=2)
@@ -180,24 +172,26 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
       mtext(side = 4, line = 3, 'Likelihood')
       abline(v = theta[theta0], lwd = 2, lty = 3)
       if(bayes==TRUE){
-        title(main=paste("Equivalence bounds ",round(low_eqbound,digits=3)," and ",round(high_eqbound,digits=3),"\nMean difference = ",round(dif,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,"\n Bayes Factor = ", BayesFactor, sep=""), cex.main=1)
+        title(main=paste("Bounds ",round(low_eqbound,digits=3)," and ",round(high_eqbound,digits=3),", Mean difference = ",round(dif,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,"\n Bayes Factor = ", BayesFactor, sep=""), cex.main=1)
       }
+      #dev.off()
     }
   }
 }
 
+TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.4,high_eqbound=0.4, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.5, se_prior=0.191, df_prior=(20+20)-2) # B = 0.08
 
 
 
 
 ##### Correct Understanding of TOST?
-TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
+TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.384,high_eqbound=0.384, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
 # Nonsignificantly different from zero t=0.23, p=0.82, and is equivalent t=3.50, p=.0002.
 
-TOSTtwo.raw.bf(m1=5.25,m2=4.75,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
+TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.43) # B = 0.31
 # Significantly different from zero t=3.81, p<.001, and is not equivalent t=0.53, p=.70
 
-TOSTtwo.raw.bf(m1=5.25,m2=5.05,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
+TOSTtwo.raw.bf(m1=5.25,m2=5.05,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.2) # B = 0.31
 # Not significantly different from zero t=1.52, p<.001, and was equivalent t=-1.75, p=.04
 
 
@@ -225,7 +219,7 @@ BF_t(0.5, 0.25, 100000, 0.03, 0.132, (89+95)-2, tail=2) # 0.12
 ## t-distributions
 # TOST raw calculator original
 TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.433, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0, se_prior=0.5, df_prior=(20+20)-2) # B = 0.30
-TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,high_eqbound=0.43, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.5, se_prior=0.191, df_prior=(20+20)-2) # B = 0.08
+TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.4,high_eqbound=0.4, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.5, se_prior=0.191, df_prior=(20+20)-2) # B = 0.08
 # Dienes & McLatchie calculator:
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0, sdtheory=0.50, dftheory=(20+20)-2, tail = 1) # 0.3063493
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0.50, sdtheory=0.191, dftheory=(20+20)-2, tail = 2) # 0.07860583
