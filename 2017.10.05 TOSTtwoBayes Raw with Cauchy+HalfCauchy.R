@@ -1,4 +1,4 @@
-TOSTtwo.raw.nm<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, var.equal, prior_dist, effect_prior, se_prior, df_prior)
+TOSTtwo.raw.nm<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, var.equal, prior_dist, effect_prior, se_prior, df_prior, uniform_lower_bound, uniform_upper_bound)
   {
   if(missing(alpha)) {
     alpha<-0.05
@@ -71,52 +71,61 @@ TOSTtwo.raw.nm<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   print(CIresults)
   #below added BF calc
   bayes<-TRUE #expect to provide bayes
-  if(missing(effect_prior)) {
+  if(missing(prior_dist)) {
     bayes<-FALSE #if no prior effect size is provided, BF not calculated
   }
-  if(bayes==TRUE) {
-    if(prior_dist=="normal") {
-      if(missing(se_prior)) {
+  if(bayes==TRUE){
+    if(prior_dist=="normal"){
+      if(missing(se_prior)){
         se_prior<-effect_prior/2 #if not specified otherwise, default SE is effect/2
       }
     }
-    if(prior_dist=="halfnormal") {
-      if(missing(se_prior)) {
+    if(prior_dist=="halfnormal"){
+      if(missing(se_prior)){
         se_prior<-effect_prior #if not specified otherwise, default SE is effect
         effect_prior<-0 #halfnormal is centered on 0
       } }
-        if(prior_dist=="cauchy") {
+        if(prior_dist=="cauchy"){
           df_prior<-1
-          {
-          if(missing(se_prior)) 
-          {df_prior<-1
+          if(missing(se_prior)){
+            df_prior<-1
             se_prior<-effect_prior/2} #if not specified otherwise, default SE is effect
-          }}
-          if(prior_dist=="halfcauchy") {
-            {df_prior<-1}
-             if(missing(se_prior)) {
+          }
+          if(prior_dist=="halfcauchy"){
+            df_prior<-1
+            if(missing(se_prior)){
               df_prior<-1
               se_prior<-effect_prior #if not specified otherwise, default SE is effect
               effect_prior<-0 #halfcauchy is centered on 0
-             }}
-      
-  if(missing(df_prior)) {
-    df_prior<-1000 #if not specified otherwise, default df = 100000 (practically normal)
-  }
-  theta <- effect_prior - 10 * se_prior
-  incr <- se_prior / 200
-  theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
-  dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
-  if(prior_dist=="halfnormal"){
-    dist_theta[theta <= 0] = 0
-  }
-  if(prior_dist=="halfcauchy"){
-    dist_theta[theta <= 0] = 0
-  }
+            }
+          }
+    if(missing(df_prior)){
+      df_prior<-1000 #if not specified otherwise, default df = 100000 (practically normal)
+    }
+    if(prior_dist=="uniform"){
+      theta = ((uniform_upper_bound + uniform_lower_bound)/2) - (2 * (uniform_upper_bound - uniform_lower_bound))
+      tLL <- ((uniform_upper_bound + uniform_lower_bound)/2) - (2 * (uniform_upper_bound - uniform_lower_bound))
+      tUL <- ((uniform_upper_bound + uniform_lower_bound)/2) + (2 * (uniform_upper_bound - uniform_lower_bound))
+      incr <- (tUL - tLL) / 4000
+      theta=seq(from = theta, by = incr, length = 4001)
+      dist_theta = numeric(4001)
+      dist_theta[theta >= uniform_lower_bound & theta <= uniform_upper_bound] = 1
+    } else {
+      theta <- effect_prior - 10 * se_prior
+      incr <- se_prior / 200
+      theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
+      dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
+      if(prior_dist=="halfnormal"){
+        dist_theta[theta <= 0] = 0
+      }
+      if(prior_dist=="halfcauchy"){
+        dist_theta[theta <= 0] = 0
+      }
+    }
   dist_theta_alt = dist_theta/sum(dist_theta)
-  likelihood <- dt((dif-theta)/(dif/t), df = degree_f) #use dif - can be set to d
-  likelihood_alt = likelihood/sum(likelihood)
-  height <- dist_theta * likelihood
+  likelihood <- dt((dif-theta)/(dif/t), df = degree_f) #use dif - can be set to d Create likelihood, for each theta, compute how well it predicts the obtained mean, given the obtained SEM and the obtained dfs.
+  likelihood_alt = likelihood/sum(likelihood) # alternative computation with normalized vectors
+  height <- dist_theta * likelihood # Multiply prior with likelihood, this gives the unstandardized posterior
   area <- sum(height * incr)
   normarea <- sum(dist_theta * incr)
   height_alt = dist_theta_alt * likelihood_alt
@@ -130,7 +139,6 @@ TOSTtwo.raw.nm<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   print(bayes_results)
   cat("\n")
   invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound=low_eqbound,high_eqbound=high_eqbound, LL_CI_TOST=LL90,UL_CI_TOST=UL90,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
-  
   #plot (adapted from Wienes by DL)
   myminY = 1
   # rescale prior and posterior to sum = 1 (density)
@@ -144,26 +152,37 @@ TOSTtwo.raw.nm<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   max_x_keep = max_per_x/maxy*100 > myminY  # threshold (1%) here
   x_keep = which(max_x_keep==1)
   par(bg = "aliceblue")
-  #png(file=paste("Fig1.png",sep=""),width=2300,height=1500, units = "px", res = 300)
-  par(mar=c(5, 5, 5, 5))
-  plot(theta, dist_theta_alt, type = "l",
-       ylim = c(0, maxy),
-       xlim = c(theta[head(x_keep,1)], theta[tail(x_keep,1)]),  # change X limits here
-       ylab = "Density (for Prior and Posterior)", xlab = "Theta", col = "grey46", lwd = 2, lty = 2)
-  lines(theta, height_alt, type = "l", col = "black", lwd = 3, lty = 1)
-  theta0 = which(theta == min(theta[theta>0]))
-  points(theta[theta0],dist_theta_alt[theta0], pch = 19, col = "grey46", cex = 1.5)
-  points(theta[theta0],height_alt[theta0], pch = 19, col = "black", cex = 1.5)
-  par(new = T)
-  plot(theta, likelihood_alt, type = "l",
-       ylim = c(0, 1),
-       xlim = c(theta[head(x_keep,1)], theta[tail(x_keep,1)]),  # change X limits here
-       col = "dodgerblue", lwd = 2, lty = 3, axes = F, xlab = NA, ylab = NA)
-  axis(side = 4)
-  mtext(side = 4, line = 3, 'Likelihood')
-  abline(v = theta[theta0], lwd = 2, lty = 3)
-  #dev.off()
-  
+  plot(NA, ylim=c(0,maxy), xlim=c(min(LL90,low_eqbound)-max(UL90-LL90, high_eqbound-low_eqbound)/5, max(UL90,high_eqbound)+max(UL90-LL90, high_eqbound-low_eqbound)/5), bty="l", yaxt="n", ylab="",xlab="Mean Difference")
+  points(x=dif, y=maxy/2, pch=15, cex=2)
+  abline(v=high_eqbound, lty=2)
+  abline(v=low_eqbound, lty=2)
+  abline(v=0, lty=2, col="grey")
+  segments(LL90,maxy/2,UL90,maxy/2, lwd=3)
+  segments(LL95,maxy/2,UL95,maxy/2, lwd=1)
+  if(bayes==FALSE) {
+    title(main=paste("Equivalence bounds ",round(low_eqbound,digits=3)," and ",round(high_eqbound,digits=3),"\nMean difference = ",round(dif,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome, sep=""), cex.main=1)
+  }
+  if(bayes==TRUE){
+    par(new=TRUE)
+    plot(theta, dist_theta_alt, type = "l",
+         ylim = c(0, maxy),
+         xlim=c(min(LL90,low_eqbound)-max(UL90-LL90, high_eqbound-low_eqbound)/5, max(UL90,high_eqbound)+max(UL90-LL90, high_eqbound-low_eqbound)/5),
+         ylab = "Density (for Prior and Posterior)", xlab = "", col = "grey46", lwd = 2, lty = 2)
+    lines(theta, height_alt, type = "l", col = "black", lwd = 3, lty = 1)
+    theta0 = which(theta == min(theta[theta>0]))
+    points(theta[theta0],dist_theta_alt[theta0], pch = 19, col = "grey46", cex = 1.5)
+    points(theta[theta0],height_alt[theta0], pch = 19, col = "black", cex = 1.5)
+    par(new = T)
+    plot(theta, likelihood_alt, type = "l",
+         ylim = c(0, 1),
+         xlim=c(min(LL90,low_eqbound)-max(UL90-LL90, high_eqbound-low_eqbound)/5, max(UL90,high_eqbound)+max(UL90-LL90, high_eqbound-low_eqbound)/5),     col = "dodgerblue", lwd = 2, lty = 3, axes = F, xlab = NA, ylab = NA)
+    axis(side = 4)
+    mtext(side = 4, line = 3, 'Likelihood')
+    abline(v = theta[theta0], lwd = 2, lty = 3)
+    if(bayes==TRUE){
+      title(main=paste("Equivalence bounds ",round(low_eqbound,digits=3)," and ",round(high_eqbound,digits=3),"\nMean difference = ",round(dif,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,"\n Bayes Factor = ", BayesFactor, sep=""), cex.main=1)
+      }
+    }
   }
 }
   
@@ -178,10 +197,22 @@ TOSTtwo.raw.nm(m1  = 0.50,
         low_eqbound  = -0.0625,
         high_eqbound =  0.0625,
         alpha = .05,
-        prior_dist="halfnormal",
+        prior_dist="normal",
         effect_prior=0,
         se_prior=0.05
 )
+
+TOSTtwo.raw.nm(m1  = 0.50,
+               m2  = 0.46,
+               sd1 = 0.18,
+               sd2 = 0.17,
+               n1  = 48,
+               n2  = 53,
+               low_eqbound  = -0.0625,
+               high_eqbound =  0.0625,
+               alpha = .05
+)
+
 # B = 1.47
 
 
@@ -202,3 +233,32 @@ TOSTtwo.raw.nm(m1  = 0.46,
         se_prior=0.05
 )
 # B = 0.31
+
+
+TOSTtwo.raw.nm(m1  = 4.785714,  # Mean of group 1
+        m2  = 4.656863,  # Mean of group 2
+        sd1 = 1.089725,  # Standard deviation of group 1
+        sd2 = 1.189497,  # Standard deviation of group 2
+        n1  = 49,  # Number of subjects in group 1
+        n2  = 51,  # Number of subjects in group 2
+        low_eqbound = -0.6,  # Value for the lower equivalence bound
+        high_eqbound =  0.6,  # Value for the higher equivalence bound
+        alpha = .05,
+        prior_dist="normal",
+        effect_prior=0.5
+)  # Alpha level for TOST and NHST
+
+
+TOSTtwo.raw.nm(m1  = 4.785714,  # Mean of group 1
+               m2  = 4.656863,  # Mean of group 2
+               sd1 = 1.089725,  # Standard deviation of group 1
+               sd2 = 1.189497,  # Standard deviation of group 2
+               n1  = 49,  # Number of subjects in group 1
+               n2  = 51,  # Number of subjects in group 2
+               low_eqbound = -0.5,  # Value for the lower equivalence bound
+               high_eqbound =  0.5,  # Value for the higher equivalence bound
+               alpha = .05,
+               prior_dist="uniform",
+               uniform_lower_bound = -2,
+               uniform_upper_bound = 2
+)
