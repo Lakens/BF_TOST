@@ -131,7 +131,7 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
     print(bayes_results)
     cat("\n")
     invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound=low_eqbound,high_eqbound=high_eqbound, LL_CI_TOST=LL90,UL_CI_TOST=UL90,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
-    #plot (adapted from Wienes by DL)
+    #plot (adapted from Wiens by DL)
     myminY = 1
     # rescale prior and posterior to sum = 1 (density)
     dist_theta_alt = dist_theta_alt / (sum(dist_theta_alt)*incr)
@@ -211,7 +211,7 @@ TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,h
 # Baguely & Kaye's calculator:
 Bf(0.132, 0.03, 0, meanoftheory=0, sdtheory=0.5, tail=1) # 0.30   
 Bf(0.132, 0.03, 0, meanoftheory=0.5, sdtheory=0.25, tail=2) # 0.12
-# Wienes calculator:
+# Wiens calculator:
 BF_t(0, 0.5, 100000, 0.03, 0.132, (89+95)-2, tail=1) # 0.31
 BF_t(0.5, 0.25, 100000, 0.03, 0.132, (89+95)-2, tail=2) # 0.12
 
@@ -223,7 +223,7 @@ TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.4,hi
 # Dienes & McLatchie calculator:
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0, sdtheory=0.50, dftheory=(20+20)-2, tail = 1) # 0.3063493
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0.50, sdtheory=0.191, dftheory=(20+20)-2, tail = 2) # 0.07860583
-# Wienes calculator:
+# Wiens calculator:
 BF_t(0, 0.5, (20+20)-2, 0.03, 0.132, (89+95)-2, tail=1) # 0.30
 BF_t(0.5, 0.191, 100000, 0.03, 0.132, (89+95)-2, tail=2) # 0.08
 
@@ -240,7 +240,7 @@ TOSTtwo.raw.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound=-0.43,h
 # Dienes & McLatchie calculator:
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0, sdtheory=0.50, dftheory=1, tail = 1) # 0.2549421
 Bft(0.132, 0.03, (95+89)-2, meanoftheory=0.50, sdtheory=0.25, dftheory=1, tail = 2) # 0.1029683
-# Wienes calculator:
+# Wiens calculator:
 BF_t(0, 0.5, 1, 0.03, 0.132, (95+89)-2, tail=1) # 0.25
 BF_t(0.5, 0.191, 1, 0.03, 0.132, (95+89)-2, tail=2) # 0.10
 
@@ -326,9 +326,6 @@ TOSTtwo.raw.bf(m1  = 4.785714,  # Mean of group 1
                uniform_upper_bound = 2
 )
 
-
-<<<<<<< HEAD
-
 #Differences of priors
 
 #Normal
@@ -376,7 +373,7 @@ TOSTtwo.raw.bf(m1  = 4.785714,  # Mean of group 1
                uniform_lower_bound = -1,
                uniform_upper_bound = 1
 )
-=======
+
 # Does new uniform calculator perform the same as other calculators?
 # Previous example, with halfnormal 
 # Moon & Roeder 2014 example
@@ -415,7 +412,3 @@ TOSTtwo.raw.bf(m1  = 0.46,  # Mean of group 1
 # B = 0.02
 BF_U(LL=0, UL=1, meanobtained=-0.04, semobtained=0.03483295, dfobtained=10000) # B = 0.02
 Bf( 0.03483295,  -0.04, 1, lower=0, upper=1) # B=0.02092337
-
-
-
->>>>>>> c33cb763492fe774c4d05602553baf95fbd1e52b

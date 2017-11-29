@@ -135,7 +135,7 @@ TOSTtwo.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, v
     print(bayes_results)
     cat("\n")
     invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound=low_eqbound,high_eqbound=high_eqbound, LL_CI_TOST=LL90,UL_CI_TOST=UL90,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
-    #plot (adapted from Wienes by DL)
+    #plot (adapted from Wiens by DL)
     myminY = 1
     # rescale prior and posterior to sum = 1 (density)
     dist_theta_alt = dist_theta_alt / (sum(dist_theta_alt)*incr)
