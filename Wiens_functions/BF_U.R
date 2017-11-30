@@ -73,7 +73,7 @@ BF_U<-function(LL, UL, meanobtained, semobtained, dfobtained)
 
   LikelihoodTheory <- area/normarea
   LikelihoodNull <- dt(meanobtained/semobtained, df = dfobtained)
-  BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
+  BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 6)
 
   
   # ####
@@ -86,7 +86,7 @@ BF_U<-function(LL, UL, meanobtained, semobtained, dfobtained)
   # define title
   mytitle = paste0("BF for U(LL = ",LL,", UL = ", UL,
                "), L = (",round(meanobtained, 2),", ",round(semobtained, 2),", ", dfobtained,  
-               ")\nBF10 = ", format(BayesFactor, digits = 2, nsmall = 2), ", BF01 = ", format(1/BayesFactor, digits = 2, nsmall = 2))
+               ")\nBF10 = ", format(BayesFactor, digits = 6, nsmall = 2), ", BF01 = ", format(1/BayesFactor, digits = 2, nsmall = 2))
   
   mylegend = "R"   # <---- define legend on right ("R") or left
   # ===========================================================

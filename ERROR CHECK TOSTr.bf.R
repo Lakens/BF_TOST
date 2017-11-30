@@ -26,13 +26,13 @@ bayes.r <- function(r, df)
 
 
 
-# Example 5 from Lakens, Scheel & Isager: All calculators agree.
+# Example 5 from Lakens, Scheel & Isager: All calculators agree (DL: Very small difference)
 # Kahane reported r(229)=-0.04,p=.525,N=231
 bayes.r(-0.04, 231) #  -0.04002135  0.06622662
 # HalfNormal
 TOSTr.bf(n = 231, r = -0.04, low_eqbound_r = -0.1830961, high_eqbound_r = 0.1830961, alpha = 0.05, prior_dist = "halfnormal", effect_prior = 0.0, se_prior = 0.2, df_prior=10000) # B = 0.21
 TOSTr.bf(n = 231, r = -0.04, low_eqbound_r = -0.1830961, high_eqbound_r = 0.1830961, alpha = 0.05, prior_dist = "halfnormal", effect_prior = 0.2) # B = 0.21
-BF_t(meantheory=0, sdtheory=.2, dftheory=10000, meanobtained=-0.04, semobtained=0.06622662, dfobtained=10000, tail = 1) # 0.21 - MATCH wienes
+BF_t(meantheory=0, sdtheory=.2, dftheory=10000, meanobtained=-0.04, semobtained=0.06622662, dfobtained=229, tail = 1) # 0.21 - MATCH wienes
 Bf( 0.06622662, -0.04, 0, meanoftheory=0, sdtheory=.2, tail=1) # 0.2118514, MATCH B&K
 # Normal
 TOSTr.bf(n = 231, r = -0.04, low_eqbound_r = -0.1830961, high_eqbound_r = 0.1830961, alpha = 0.05, prior_dist = "normal", effect_prior = 0.2) # B = 0.09
