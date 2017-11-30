@@ -1,20 +1,3 @@
-#Example
-meantheory = 0
-sdtheory = 11
-dftheory = 1000000
-meanobtained = 12
-semobtained = 5
-dfobtained = 1000000
-tail = 2
-
-TVALUE<-2.4
-MEAN<-12
-SEM<-MEAN/TVALUE
-SEM
-
-BF_t(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail = 2)
-
-
 BF_t<-function(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobtained, tail = 2)
 # Bt(meantheory, sdtheory, dftheory), L = (meanobtained, semobtained, dfobtained)
 # tail = 1 means that no negative thetas are allowed.
