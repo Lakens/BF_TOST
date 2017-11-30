@@ -1,15 +1,8 @@
-## Added Bayes factors and Daniels graphs to TOSTr
-
-## Problem: 
-## The Bs calculated across the TOSTr, Wienes & Baguley&Kay calculators appear identical for smaller effect (see lines: 189-247)
-## But the Bs from the TOSTr differ greatly from the other two as the data differences get bigger (see lines 257-306)
-
-
-TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prior_dist, effect_prior, se_prior, df_prior, uniform_lower_bound, uniform_upper_bound){
+TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prior_dist, effect_prior, se_prior, df_prior, uniform_lower_bound, uniform_upper_bound)
+  {
   if(missing(alpha)) {
     alpha <- 0.05
   }
-  
   # Calculate TOST, t-test, 90% CIs and 95% CIs
   z1<-((log((1+abs(r))/(1-abs(r)))/2)-(log((1+low_eqbound_r)/(1-low_eqbound_r))/2))/(sqrt(1/(n-3)))
   z2<-((log((1+abs(r))/(1-abs(r)))/2)-(log((1+high_eqbound_r)/(1-high_eqbound_r))/2))/(sqrt(1/(n-3)))
@@ -27,7 +20,6 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
   UL95<-(exp(1)^(2*zUL95)-1)/(exp(1)^(2*zUL95)+1)
   testoutcome<-ifelse(pttest<alpha,"significant","non-significant")
   TOSToutcome<-ifelse(ptost<alpha,"significant","non-significant")
-  
   # Plot results
   if (plot == TRUE) {
     plot(NA, ylim=c(0,1), xlim=c(min(LL90,low_eqbound_r)-max(UL90-LL90, high_eqbound_r-low_eqbound_r)/10, max(UL90,high_eqbound_r)+max(UL90-LL90, high_eqbound_r-low_eqbound_r)/10), bty="l", yaxt="n", ylab="",xlab="Correlation")
@@ -39,12 +31,10 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
     segments(LL95,0.5,UL95,0.5, lwd=1)
     title(main=paste("Equivalence bounds ",round(low_eqbound_r,digits=3)," and ",round(high_eqbound_r,digits=3),"\nr = ",round(r,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,sep=""), cex.main=1)
   }
-  
   # Print TOST and t-test results in message form
   message(cat("Using alpha = ",alpha," the NHST t-test was ",testoutcome,", p = ",pttest,sep=""))
   cat("\n")
   message(cat("Using alpha = ",alpha, " the equivalence test was ",TOSToutcome,", p = ",ptost,sep=""))
-  
   # Print TOST and t-test results in table form
   TOSTresults<-data.frame(p1,p2)
   colnames(TOSTresults) <- c("p-value 1","p-value 2")
@@ -60,8 +50,7 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
   cat("\n")
   cat("TOST confidence interval:\n")
   print(CIresults)
-  
-  #below added BF calc
+  #Calculate Bayes Factor
   bayes<-TRUE #expect to provide bayes
   effect_prior<-  0.5*log((1 + effect_prior)/(1 - effect_prior)) #transform the effect_prior from r to Fisher's z
   r_fisher <- 0.5*log((1 + r)/(1 - r)) #transform the obtained r to Fisher's z
@@ -80,7 +69,8 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
       if(missing(se_prior)){
         se_prior<-effect_prior #if not specified otherwise, default SE is effect
         effect_prior<-0 #halfnormal is centered on 0
-      } }
+      } 
+    }
     if(prior_dist=="cauchy"){
       df_prior<-1
       if(missing(se_prior)){
@@ -180,147 +170,6 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
         title(main=paste("Bounds ",round(low_eqbound_r,digits=3)," and ",round(high_eqbound_r,digits=3),", r = ",round(r,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,"\n Bayes Factor = ", BayesFactor, sep=""), cex.main=1)
       }
       #dev.off()
-    }  }  }
-
-
-
-
-
-
-########### Small raw effects seem to work fine:
-
-
-# Using Example 5 data from Lakens, Scheel & Isager
-# Kahane reported r(229)=-0.04,p=.525,N=231
-# This Bayes factor predicts an r = 0.2 (average effect in Social Psych)
-
-# HalfNormal
-TOSTr.bf(n = 231, 
-         r = -0.04, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0.2, 
-         ) 
-# B = 0.21
-library(psych)
-fisherz(-0.04) # -0.04002135, 
-1/sqrt(229 -1) # 0.06622662, sem
-BF_t(meantheory=0, sdtheory=.2, dftheory=10000, meanobtained=-0.04, semobtained=0.06622662, dfobtained=10000, tail = 1) # 0.21, matches Wiens
-Bf( 0.06622662, -0.04, 0, meanoftheory=0, sdtheory=.2, tail=1) # 0.2118514, matches Baguley & Kaye
-
-
-# Normal
-TOSTr.bf(n = 231, 
-         r = -0.04, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "normal", 
-         effect_prior = 0.2, 
-) 
-# B = 0.09
-library(psych)
-fisherz(-0.04) # -0.04002135, 
-1/sqrt(229 -1) # 0.06622662, sem
-BF_t(meantheory=.2, sdtheory=.2/2, dftheory=10000, meanobtained=-0.04002135, semobtained=0.06622662, dfobtained=10000, tail = 2) # 0.09, matches Wiens
-Bf( 0.06622662, -0.04002135, 0, meanoftheory=.2, sdtheory=.2/2, tail=2) # 0.08948947, matches Baguley & Kaye
-
-
-
-# Uniform
-TOSTr.bf(n = 231, 
-         r = -0.04, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "uniform", 
-         effect_prior = 0.2,
-         uniform_lower_bound= 0,
-         uniform_upper_bound=.5
-) 
-# B = 0.11
-library(psych)
-fisherz(-0.04) # -0.04002135, 
-1/sqrt(229 -1) # 0.06622662, sem
-BF_U(LL=0, UL=.5, meanobtained=-0.04002135, semobtained=0.06622662, dfobtained=100000) # 0.11
-Bf(0.06622662 , -0.04002135 , 1, lower=0, upper=.5) # B=0.1084745
-
-
-
-
-
-
-
-
-
-########### Larger raw effects generate different Bs to those obtained by Wienes and Baguley&Kaye
-
-
-# HalfNormal
-TOSTr.bf(n = 50, 
-         r = 0.5, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0.2
-) 
-# B = 61.01
-fisherz(0.5) # 0.5493061, 
-1/sqrt(48 -1) # 0.145865, sem
-BF_t(meantheory=0, sdtheory=.2, dftheory=10000, meanobtained=0.5493061, semobtained=0.145865, dfobtained=10000, tail = 1) # 120.28, 
-Bf( 0.145865, 0.5493061, 0, meanoftheory=0, sdtheory=.2, tail=1) # 120.5213, matches Baguley & Kaye
-
-
-# Normal
-TOSTr.bf(n = 50, 
-         r = 0.5, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "normal", 
-         effect_prior = 0.2 
-) 
-# B = 71.74
-fisherz(0.5) # 0.5493061, 
-1/sqrt(48 -1) # 0.145865, sem
-BF_t(meantheory=.2, sdtheory=.2/2, dftheory=10000, meanobtained=0.5493061, semobtained=0.145865, dfobtained=10000, tail = 2) # 
-Bf( 0.145865, 0.5493061, 0, meanoftheory=.2, sdtheory=.2/2, tail=2) # 140.8387, matches Baguley & Kaye
-
-
-
-# Uniform
-TOSTr.bf(n = 50, 
-         r = 0.5, 
-         low_eqbound_r = -0.1830961, 
-         high_eqbound_r = 0.1830961, 
-         alpha = 0.05, 
-         prior_dist = "uniform", 
-         effect_prior = 0.2 ,
-         uniform_lower_bound= 0,
-         uniform_upper_bound=.5
-) 
-# B = 153.83
-library(psych)
-fisherz(-0.04) # 0.04002135
-BF_U(LL=0, UL=.5, meanobtained=0.5493061, semobtained=0.145865, dfobtained=100000) # 322.91
-Bf(0.145865 , 0.5493061 , 1, lower=0, upper=.5) # B=323.6547
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+  }
+}

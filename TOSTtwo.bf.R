@@ -128,7 +128,7 @@ TOSTtwo.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, v
     height_alt = height_alt/sum(height_alt)
     LikelihoodTheory <- area/normarea
     LikelihoodNull <- dt(dif/(dif/t), df = degree_f)
-    BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
+    BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 6)
     bayes_results <- data.frame(BayesFactor, LikelihoodTheory, LikelihoodNull)
     colnames(bayes_results) <- c("Bayes Factor","Likelihood (alternative)","Likelihood (null)")
     cat("Bayes Results:\n")
@@ -182,46 +182,3 @@ TOSTtwo.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound_d, high_eqbound_d, alpha, v
     }
   }
 }
-
-
-##### Correct Understanding of TOST?
-TOSTtwo.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.384,high_eqbound_d=0.384, var.equal=FALSE, prior_dist = "halfnormal", effect_prior = 0.5) # B = 0.31
-# Nonsignificantly different from zero t=0.23, p=0.82, and is equivalent t=3.50, p=.0002.
-
-TOSTtwo.bf(m1=5.25,m2=5.22,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.43) # B = 0.31
-# Significantly different from zero t=3.81, p<.001, and is not equivalent t=0.53, p=.70
-
-TOSTtwo.bf(m1=5.25,m2=5.05,sd1=0.95,sd2=0.83,n1=95,n2=89,low_eqbound_d=-0.43,high_eqbound_d=0.43, var.equal=FALSE, prior_dist = "normal", effect_prior = 0.2) # B = 0.31
-# Not significantly different from zero t=1.52, p<.001, and was equivalent t=-1.75, p=.04
-
-
-#Half-Normal
-TOSTtwo.raw.bf(m1  = 4.785714,  # Mean of group 1
-               m2  = 4.656863,  # Mean of group 2
-               sd1 = 1.089725,  # Standard deviation of group 1
-               sd2 = 1.189497,  # Standard deviation of group 2
-               n1  = 49,  # Number of subjects in group 1
-               n2  = 51,  # Number of subjects in group 2
-               low_eqbound_d = -0.6,  # Value for the lower equivalence bound
-               high_eqbound_d =  0.6,  # Value for the higher equivalence bound
-               alpha = .05,
-               prior_dist="halfnormal",
-               effect_prior=1
-)  # Alpha level for TOST and NHST
-
-
-
-#Uniform
-TOSTtwo.bf(m1  = 4.785714,  # Mean of group 1
-               m2  = 4.656863,  # Mean of group 2
-               sd1 = 1.089725,  # Standard deviation of group 1
-               sd2 = 1.189497,  # Standard deviation of group 2
-               n1  = 49,  # Number of subjects in group 1
-               n2  = 51,  # Number of subjects in group 2
-               low_eqbound_d = -0.4,  # Value for the lower equivalence bound
-               high_eqbound_d =  0.4,  # Value for the higher equivalence bound
-               alpha = .05,
-               prior_dist="uniform",
-               uniform_lower_bound = -6,
-               uniform_upper_bound = 6
-)
