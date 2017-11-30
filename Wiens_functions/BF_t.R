@@ -91,7 +91,7 @@ BF_t<-function(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobta
 
   LikelihoodTheory <- area/normarea
   LikelihoodNull <- dt(meanobtained/semobtained, df = dfobtained)
-  BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 2)
+  BayesFactor <- round(LikelihoodTheory / LikelihoodNull, 6)
 
 
   # ####
