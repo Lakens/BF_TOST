@@ -61,6 +61,7 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   cat("\n")
   cat("TOST confidence interval:\n")
   print(CIresults)
+  cat("\n")
   #below added BF calc
   bayes<-TRUE #expect to provide bayes
   if(missing(prior_dist)) {
@@ -102,11 +103,15 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
       theta=seq(from = theta, by = incr, length = 4001)
       dist_theta = numeric(4001)
       dist_theta[theta >= uniform_lower_bound & theta <= uniform_upper_bound] = 1
+      bayes_summary <- data.frame(prior_dist, uniform_lower_bound, uniform_upper_bound)
+      colnames(bayes_summary) <- c("Prior Distribution","Lower Bound","Upper Bound")
     } else {
       theta <- effect_prior - 10 * se_prior
       incr <- se_prior / 200
       theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
       dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
+      bayes_summary <- data.frame(prior_dist, effect_prior, se_prior, df_prior)
+      colnames(bayes_summary) <- c("Prior Distribution","Effect Size Prior","SE Prior", "df Prior")
       if(prior_dist=="halfnormal"){
         dist_theta[theta <= 0] = 0
       }
@@ -129,6 +134,9 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
     colnames(bayes_results) <- c("Bayes Factor","Likelihood (alternative)","Likelihood (null)")
     cat("Bayes Results:\n")
     print(bayes_results)
+    cat("\n")
+    cat("Bayes Summary:\n")
+    print(bayes_summary)
     cat("\n")
     invisible(list(TOST_t1=t1,TOST_p1=p1,TOST_t2=t2,TOST_p2=p2, TOST_df=degree_f,alpha=alpha,low_eqbound=low_eqbound,high_eqbound=high_eqbound,low_eqbound=low_eqbound,high_eqbound=high_eqbound, LL_CI_TOST=LL90,UL_CI_TOST=UL90,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
     #plot (adapted from Wiens by DL)
