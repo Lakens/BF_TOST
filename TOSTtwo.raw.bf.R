@@ -65,7 +65,7 @@ TOSTtwo.raw.bf<-function(m1,m2,sd1,sd2,n1,n2,low_eqbound, high_eqbound, alpha, v
   #below added BF calc
   bayes<-TRUE #expect to provide bayes
   if(missing(prior_dist)) {
-    bayes<-FALSE #if no prior effect size is provided, BF not calculated
+    bayes<-FALSE #if no prior distribution is provided, BF not calculated
   }
   if(bayes==TRUE){
     if(prior_dist=="normal"){

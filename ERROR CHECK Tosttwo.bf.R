@@ -89,5 +89,3 @@ BF_U(LL=0, UL=3, meanobtained=0.6600000, semobtained=0.2282192, dfobtained=98) #
 Bf(0.2282192,0.6600000,1,lower=0,upper=3) # 12.46155, DOES NOT MATCH B&K
 
 
-
-

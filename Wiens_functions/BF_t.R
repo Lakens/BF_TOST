@@ -84,7 +84,6 @@ BF_t<-function(meantheory, sdtheory, dftheory, meanobtained, semobtained, dfobta
   area <- sum(height * incr)
   # area <- sum(dist_height * incr * likelihood)
   normarea <- sum(dist_theta * incr)
-  plot(height)
   # alternative computation with normalized vectors
   height_alt = dist_theta_alt * likelihood_alt
   height_alt = height_alt/sum(height_alt)

@@ -52,12 +52,14 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
   print(CIresults)
   #Calculate Bayes Factor
   bayes<-TRUE #expect to provide bayes
-  effect_prior<-  0.5*log((1 + effect_prior)/(1 - effect_prior)) #transform the effect_prior from r to Fisher's z
   r_fisher <- 0.5*log((1 + r)/(1 - r)) #transform the obtained r to Fisher's z
   df=n-2
   sem_fisher <- 1/sqrt(df-1)
+  if(prior_dist != "uniform") {
+    effect_prior<-  0.5*log((1 + effect_prior)/(1 - effect_prior)) #transform the effect_prior from r to Fisher's z
+  }
   if(missing(prior_dist)) {
-    bayes<-FALSE #if no prior effect size is provided, BF not calculated
+    bayes<-FALSE #if no prior distribution is provided, BF not calculated
   }
   if(bayes==TRUE){
     if(prior_dist=="normal"){
@@ -96,11 +98,15 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
       theta=seq(from = theta, by = incr, length = 4001)
       dist_theta = numeric(4001)
       dist_theta[theta >= uniform_lower_bound & theta <= uniform_upper_bound] = 1
+      bayes_summary <- data.frame(prior_dist, uniform_lower_bound, uniform_upper_bound)
+      colnames(bayes_summary) <- c("Prior Distribution","Lower Bound","Upper Bound")
     } else {
       theta <- effect_prior - 10 * se_prior
       incr <- se_prior / 200
       theta=seq(from = effect_prior - 10 * se_prior, by = incr, length = 4001)
       dist_theta <- dt(x = (theta-effect_prior)/se_prior, df=df_prior)
+      bayes_summary <- data.frame(prior_dist, effect_prior, se_prior, df_prior)
+      colnames(bayes_summary) <- c("Prior Distribution","Effect Size Prior","SE Prior", "df Prior")
       if(prior_dist=="halfnormal"){
         dist_theta[theta <= 0] = 0
       }
@@ -123,6 +129,9 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
     colnames(bayes_results) <- c("Bayes Factor","Likelihood (alternative)","Likelihood (null)")
     cat("Bayes Results:\n")
     print(bayes_results)
+    cat("\n")
+    cat("Bayes Summary:\n")
+    print(bayes_summary)
     cat("\n")
     # Print TOST and t-test results in table form
     invisible(list(r=r,TOST_p1=p1,TOST_p2=p2,alpha=alpha,low_eqbound_r=low_eqbound_r,high_eqbound_r=high_eqbound_r, LL_CI_TOST=LL90,UL_CI_TOST=UL90,LL_CI_TTEST=LL95, UL_CI_TTEST=UL95,bf=BayesFactor, ll_theory=LikelihoodTheory, ll_null=LikelihoodNull))
