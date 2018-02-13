@@ -78,3 +78,57 @@
 # If the confidence interval is within the null region for the direct effect then there is full mediation.
 # 
 # 
+
+
+# direct effect (parental education -> quality of life)
+
+sesoi <- 1.73 / 2  # Quality of life SESOI set to half a standard deviation based on Norman, Sloan and Wyrwich (2003)
+bound.u <-  sesoi
+bound.l <- -sesoi
+
+m <- -0.05
+se <- 0.025
+z <- m/se
+
+p.nhst <- 2*pnorm(q = z)
+p.tost.u <- pnorm(q = z, mean = bound.u/se, lower.tail = TRUE)
+p.tost.l <- pnorm(q = z, mean = bound.l/se, lower.tail = FALSE)
+
+p.nhst  # NHST result
+max(p.tost.l, p.tost.u)  # TOST result
+
+
+# indirect effect 1 (parental education -> offspring education)
+
+sesoi <- 0.01  # This effect does not concern QOL. Instead of using QOL SD/2, SESOI is here based on the effect corresponding to a one point difference in self-reported education between children of educated and uneducated parents, in 1/100 of cases.
+bound.u <-  sesoi
+bound.l <- -sesoi
+
+m <- -1.92
+se <- 0.07
+z <- m/se
+
+p.nhst <- 2*pnorm(q = z)
+p.tost.u <- pnorm(q = z, mean = bound.u/se, lower.tail = TRUE)
+p.tost.l <- pnorm(q = z, mean = bound.l/se, lower.tail = FALSE)
+
+p.nhst  # NHST result
+max(p.tost.l, p.tost.u)  # TOST result
+
+
+# indirect effect 2 (offspring education -> quality of life)
+
+sesoi <- 1.73 / 2  # Quality of life SESOI set to half a standard deviation based on Norman, Sloan and Wyrwich (2003)
+bound.u <-  sesoi
+bound.l <- -sesoi
+
+m <- -0.031
+se <- 0.0056
+z <- m/se
+
+p.nhst <- 2*pnorm(q = z)
+p.tost.u <- pnorm(q = z, mean = bound.u/se, lower.tail = TRUE)
+p.tost.l <- pnorm(q = z, mean = bound.l/se, lower.tail = FALSE)
+
+p.nhst  # NHST result
+max(p.tost.l, p.tost.u)  # TOST result
