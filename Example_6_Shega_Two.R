@@ -2,23 +2,41 @@
 
 source('TOSTtwo.bf.R') #Load function for standardized mean differences
 
-#Set SESOI to d = 0.1. Small effects can be excluded given large sample size. 
 
-m1 <- 72.06
-m2 <- 72.061
-n1 <- 1300
-n2 <- 1280
-sd1 <- 0.308*sqrt(n1)
-sd2 <- 0.387*sqrt(n2)
+# Calculate the average pain ratings for two age cohorts (older and younger than 70)
 
-TOSTtwo.bf(m1 = 72.06,
-           m2 = 72.060001,
-           sd1 = 11.1051,
-           sd2 = 13.84573,
-           n1 = 1300,
-           n2 = 1289,
-           low_eqbound_d = -0.1,
-           high_eqbound_d = 0.1, 
+mean.old <- ((1.98*1015)+(2.14*554))/1569
+se.old <- ((0.057*1015)+(0.102*554))/1569
+
+sd.70 <- 0.057*sqrt(1015)
+sd.80 <- 0.102*sqrt(554)
+sd.old <- ((sd.70*1015)+(sd.80*554))/1569
+
+m1 <- 2.03
+m2 <- mean.old
+n1 <- 1020
+n2 <- 1569
+sd1 <- 0.084*sqrt(n1)
+sd2 <- sd.old
+
+
+# Determine the SESOI:
+
+mid.vas <- 9  # On a 100mm visual analogue scale, 12mm 95%CI[9mm, 15mm] seems to be the clinical Minimally Important Difference for chronic pain ratings (see Kelly [2001]). We can pick a conservative estimate by choosing the lower end of this CI as our SESOI.
+mid.lic <- mid.vas*((7-1)/(100-1))  # Need to convert the MID to Lickert scale, 
+mid.d <- mid.lic/sd2  # Need to convert raw SESOI to value in COhens d
+
+
+# Calculate TOST and BF
+
+TOSTtwo.bf(m1 = m1,
+           m2 = m2,
+           sd1 = sd1,
+           sd2 = sd2,
+           n1 = n1,
+           n2 = n2,
+           low_eqbound_d = -mid.d,
+           high_eqbound_d = mid.d, 
            var.equal = TRUE, 
            prior_dist = "normal", 
            effect_prior = 0,
