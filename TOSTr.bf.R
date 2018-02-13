@@ -3,7 +3,7 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
   if(missing(alpha)) {
     alpha <- 0.05
   }
-  # Calculate TOST, t-test, 90% CIs and 95% CIs
+  # Calculate TOST, z-test, 90% CIs and 95% CIs
   z1<-((log((1+abs(r))/(1-abs(r)))/2)-(log((1+low_eqbound_r)/(1-low_eqbound_r))/2))/(sqrt(1/(n-3)))
   z2<-((log((1+abs(r))/(1-abs(r)))/2)-(log((1+high_eqbound_r)/(1-high_eqbound_r))/2))/(sqrt(1/(n-3)))
   p1<-ifelse(low_eqbound_r<r,pnorm(-abs(z1)),1-pnorm(-abs(z1)))
@@ -31,11 +31,11 @@ TOSTr.bf<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot = TRUE, prio
     segments(LL95,0.5,UL95,0.5, lwd=1)
     title(main=paste("Equivalence bounds ",round(low_eqbound_r,digits=3)," and ",round(high_eqbound_r,digits=3),"\nr = ",round(r,digits=3)," \n TOST: ", 100*(1-alpha*2),"% CI [",round(LL90,digits=3),";",round(UL90,digits=3),"] ", TOSToutcome," \n NHST: ", 100*(1-alpha),"% CI [",round(LL95,digits=3),";",round(UL95,digits=3),"] ", testoutcome,sep=""), cex.main=1)
   }
-  # Print TOST and t-test results in message form
-  message(cat("Using alpha = ",alpha," the NHST t-test was ",testoutcome,", p = ",pttest,sep=""))
+  # Print TOST and z-test results in message form
+  message(cat("Using alpha = ",alpha," the NHST tztest was ",testoutcome,", z = ",qnorm(1-pttest/2),", p = ",pttest,sep=""))
   cat("\n")
-  message(cat("Using alpha = ",alpha, " the equivalence test was ",TOSToutcome,", p = ",ptost,sep=""))
-  # Print TOST and t-test results in table form
+  message(cat("Using alpha = ",alpha, " the equivalence test was ",TOSToutcome,", z = ",ifelse(abs(z1) < abs(z2), z1, z2),", p = ",ptost,sep=""))
+  # Print TOST and z-test results in table form
   TOSTresults<-data.frame(p1,p2)
   colnames(TOSTresults) <- c("p-value 1","p-value 2")
   bound_r_results<-data.frame(low_eqbound_r,high_eqbound_r)
