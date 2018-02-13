@@ -12,3 +12,12 @@ source('TOSTr.bf.R') #Load function for correlations
 n <- 362
 r <- -0.03
 TOSTr.bf(n = n, r = r, low_eqbound_r = -0.1, high_eqbound_r = 0.1, alpha = 0.05, prior_dist = "normal", effect_prior = 0.0, se_prior = 0.2, df_prior=10000)
+
+
+
+# With Bayes factor based on Male result in Paxton + Phythian (1999), r = -.23
+TOSTr.bf(n = n, r = r, low_eqbound_r = -0.1, high_eqbound_r = 0.1, alpha = 0.05, prior_dist = "halfnormal", effect_prior = 0.0, se_prior = 0.23, df_prior=10000)
+## Here we obtained and predicted a negative result. When using a half normal, one should make sure the signs match (because one cannot specify a negative SD in the prior model)
+## However, changing the signs (e.g. -0.03 to 0.03 and -.23 to .23) might be confusing for users looking at the graph. 
+# Correct B=0.369433
+
