@@ -25,7 +25,54 @@
 # CONCLUSION
 # Taking a scale of effect from a past study was the easiest way to objectively characterize the predicted effect in this case, and a Bayes factor based on this scaling indicated the evidence was weak for H0.  A conclusion to suspend judgment matched an intuitive judgment based on equivalence testing.
 
-# Distraction preferences as % of trials in which distraction was chosen over reappraisal (for positive images)
+
+### Trying to come up with a SESOI: 
+#Scheibe et al. (2015) previously used the same paradigm to compare distraction vs reappraisal choices in older and younger subjects. 
+# They only report outcomes of their regression model and no mean proportions (of distraction choices), which would be necessary to calculate the size of their effect as Cohen's d.
+# Instead, we could use the critical effect size approach and calculate how large an effect they *could have* detected in a t-test: 
+
+# Previous study: Scheibe et al. (2015)
+n.younger.scheibe <- 38
+n.older.scheibe <- 39
+
+# calculating critical effect size for Scheibe et al. (2015)
+t.crit <- qt(1-0.05/2, (n.younger.scheibe + n.older.scheibe)-2)
+d.crit <- t.crit * sqrt((1/n.younger.scheibe)+(1/n.older.scheibe))
+
+
+
+### Martins et al.
+# Distraction preferences as % of trials in which distraction was chosen (for NEGATIVE images)
+# from the paper (p. 6): "age-related differences in strategy choice for negative images, (Myoung = 0.34 ± 0.03; Molder = 0.32 ± 0.03), t(62) = 0.35, p = .73, d = 0.09 (see Figure 2)."
+
+m.younger <- 0.338 # I tweaked the number to get closer to the test values they report
+sd.younger <- 0.0344 * sqrt(n.younger) # I tweaked the number to get closer to the test values they report
+m.older <- 0.321 # I tweaked the number to get closer to the test values they report
+sd.older <- 0.0344 * sqrt(n.older) # I tweaked the number to get closer to the test values they report
+
+# the values I entered for the BF here are mere guesswork to get the code to work at all, must be revised!
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "normal", 
+           effect_prior = 0, 
+           se_prior = 0.3, 
+           df_prior = 1)
+
+
+
+##################### ##################### ##################### 
+
+### previous attempt to run a TOST for proportions
+
+# Distraction preferences as % of trials in which distraction was chosen over reappraisal (for POSITIVE images)
 # low-intensity images:
 m.low.younger <- 0.30
 sd.low.younger <- 0.04
@@ -41,7 +88,6 @@ sd.high.older <- 0.04
 n.younger <- 32
 n.older <- 32
 
-
 # Calculating the gross mean percentages across low and high intensity:
 m.younger <- (m.low.younger + m.high.younger)/2
 m.older <- (m.low.older + m.high.older)/2
@@ -49,12 +95,11 @@ m.older <- (m.low.older + m.high.older)/2
 # log odds
 ln.OR <-log((m.younger * (1-m.older)) / (m.older * (1-m.younger)))
 
-# proportions from Scheibe et al. (2015) to calculate equivalence bounds
+
+# proportions from Scheibe et al. (2015) to calculate equivalence bounds (careful - these were for NEGATIVE images!)
 prop.young.scheibe <- 0.405
 prop.old.scheibe <- 0.485
 prop.diff.scheibe <- abs(prop.young.scheibe-prop.old.scheibe)
 
 
 TOSTtwo.prop.bf(prop1 = m.younger, prop2 = m.older, n1 = n.younger, n2 = n.older, low_eqbound = -prop.diff.scheibe , high_eqbound = prop.diff.scheibe, alpha = 0.05, plot = TRUE)
-
-
