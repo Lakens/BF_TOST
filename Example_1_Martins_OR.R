@@ -24,3 +24,37 @@
 # 
 # CONCLUSION
 # Taking a scale of effect from a past study was the easiest way to objectively characterize the predicted effect in this case, and a Bayes factor based on this scaling indicated the evidence was weak for H0.  A conclusion to suspend judgment matched an intuitive judgment based on equivalence testing.
+
+# Distraction preferences as % of trials in which distraction was chosen over reappraisal (for positive images)
+# low-intensity images:
+m.low.younger <- 0.30
+sd.low.younger <- 0.04
+m.low.older <- 0.28
+sd.low.older <- 0.03
+
+# high-intensity images:
+m.high.younger <- 0.65
+sd.high.younger <- 0.04
+m.high.older <- 0.47
+sd.high.older <- 0.04
+
+n.younger <- 32
+n.older <- 32
+
+
+# Calculating the gross mean percentages across low and high intensity:
+m.younger <- (m.low.younger + m.high.younger)/2
+m.older <- (m.low.older + m.high.older)/2
+
+# log odds
+ln.OR <-log((m.younger * (1-m.older)) / (m.older * (1-m.younger)))
+
+# proportions from Scheibe et al. (2015) to calculate equivalence bounds
+prop.young.scheibe <- 0.405
+prop.old.scheibe <- 0.485
+prop.diff.scheibe <- abs(prop.young.scheibe-prop.old.scheibe)
+
+
+TOSTtwo.prop.bf(prop1 = m.younger, prop2 = m.older, n1 = n.younger, n2 = n.older, low_eqbound = -prop.diff.scheibe , high_eqbound = prop.diff.scheibe, alpha = 0.05, plot = TRUE)
+
+
