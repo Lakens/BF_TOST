@@ -5,14 +5,14 @@ source('TOSTtwo.bf.R') #Load function for standardized mean differences
 # Determine the SESOI:
 
 sesoi.vas <- 9  # On a 100mm visual analogue scale, 12mm 95%CI[9mm, 15mm] seems to be the clinical Minimally Important Difference for chronic pain ratings (see Kelly [2001]). We can pick a conservative estimate by choosing the lower end of this CI as our SESOI.
-sesoi.lic <- mid.vas*((7-1)/(100-1))  # Need to convert the MID to Lickert scale, 
+sesoi.lic <- sesoi.vas*((7-1)/(100-1))  # Need to convert the MID to Lickert scale, 
 
 # Need to convert raw SESOI to value in COhens d. First estimate total SD, the calculate Cohens d from SESOI/SD
 sd62 <- 0.084*sqrt(1020)
 sd70 <- 0.057*sqrt(1015)
 sd80 <- 0.102*sqrt(554)
 sd <- (sd62*1020 + sd70*1015 + sd80*554) / (1020+1015+554)
-sesoi.d <- mid.lic/sd  
+sesoi.d <- sesoi.lic/sd  
 
 
 # Descriptive statistics for Age group 62-69 (1) and 70-79 (2)
