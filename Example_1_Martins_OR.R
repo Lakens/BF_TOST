@@ -45,6 +45,8 @@ d.crit <- t.crit * sqrt((1/n.younger.scheibe)+(1/n.older.scheibe))
 # Distraction preferences as % of trials in which distraction was chosen (for NEGATIVE images)
 # from the paper (p. 6): "age-related differences in strategy choice for negative images, (Myoung = 0.34 ± 0.03; Molder = 0.32 ± 0.03), t(62) = 0.35, p = .73, d = 0.09 (see Figure 2)."
 
+n.younger <- 32
+n.older <- 32
 m.younger <- 0.338 # I tweaked the number to get closer to the test values they report
 sd.younger <- 0.0344 * sqrt(n.younger) # I tweaked the number to get closer to the test values they report
 m.older <- 0.321 # I tweaked the number to get closer to the test values they report
