@@ -31,6 +31,8 @@
 # They only report outcomes of their regression model and no mean proportions (of distraction choices), which would be necessary to calculate the size of their effect as Cohen's d.
 # Instead, we could use the critical effect size approach and calculate how large an effect they *could have* detected in a t-test: 
 
+source("TOSTtwo.bf.R")
+
 # Previous study: Scheibe et al. (2015)
 n.younger.scheibe <- 38
 n.older.scheibe <- 39
@@ -66,8 +68,53 @@ TOSTtwo.bf(m1 = m.younger,
            prior_dist = "normal", 
            effect_prior = 0, 
            se_prior = 0.3, 
-           df_prior = 1)
+           df_prior = 10000)
 
+
+
+# Bayes factor - treating the proportions as two intervals and running a t-test
+# Based on range (can't be bigger than 1)
+TOSTtwo.bf(m1 = m.older, 
+           m2 = m.younger, 
+           sd1 = sd.older, 
+           sd2 = sd.younger, 
+           n1 = n.older, 
+           n2 = n.younger, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "halfnormal", 
+           effect_prior = 0, 
+           se_prior = 0.5, 
+           df_prior = 10000) # df from scheibe
+# 0.07
+
+# Scheibe et al 2015 mean difference:
+prop.young.scheibe <- 0.405
+prop.old.scheibe <- 0.485
+prior.dif <- prop.young.scheibe - prop.old.scheibe # -0.08
+obtained.df <- m.younger-m.older # 0.017
+TOSTtwo.bf(m1 = m.older, 
+           m2 = m.younger, 
+           sd1 = sd.older, 
+           sd2 = sd.younger, 
+           n1 = n.older, 
+           n2 = n.younger, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "halfnormal", 
+           effect_prior = 0, 
+           se_prior = 0.04, 
+           df_prior = 10000) # df from scheibe
+# B = 0.41
+## This is an example where the direction of the prediction (e.g. oldprop - young prop = +0.08) will
+## affect the way that users will need to enter m1 and m2. In this example the obtained mdiff is in the 
+## opposite direction to that predicted by Schiebe. If you enter m1=m.younger and m2=m.older, then
+## the obtained mdiff = +0.017. The problem is we can't use a negative SD on the normal. 
+## Not really a problem, just something to consider, and instructions we will have to provide.
 
 
 ##################### ##################### ##################### 
