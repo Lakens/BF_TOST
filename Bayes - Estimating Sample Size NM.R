@@ -58,7 +58,7 @@ segments(0, 3, 250, 3, col= 'black', lwd=2, lty=1)          # Add a black horizo
 lines(y[y<10 ], lwd=2, lty=3)
 Axis(side=1,at=seq(0, 200, by = 10))
 Axis(side=2,at=seq(0,10, by=1))
-legend(0,10,legend=c("B for H0 (Mdiff = 0ms)","B for H1 (Mdiff = 25ms)", "Threshold for sensitive test (B=3)"),
+legend(0,10,legend=c("B for H0 (Mdiff = 0ms)","B for H1 (Mdiff = 1.42)", "Threshold for sensitive test (B = 3)"),
        text.col="black", lty = c(2,3,1))
 
 dev.copy(png,'Estimating Sample Size Based on Bunce et al 2018.png')             # Save whatever is in displayed in the plot viewer in my wd
