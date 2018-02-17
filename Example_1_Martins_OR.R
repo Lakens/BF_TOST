@@ -72,6 +72,8 @@ TOSTtwo.bf(m1 = m.younger,
 
 
 
+
+
 # Bayes factor - treating the proportions as two intervals and running a t-test
 # Based on range (can't be bigger than 1)
 TOSTtwo.bf(m1 = m.older, 
@@ -89,6 +91,38 @@ TOSTtwo.bf(m1 = m.older,
            se_prior = 0.5, 
            df_prior = 10000) # df from scheibe
 # 0.07
+
+# Identifying RR lower
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "normal", 
+           effect_prior = 0, 
+           se_prior = 0.147, 
+           df_prior = 10000)
+
+# Identifying RR upper
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "normal", 
+           effect_prior = 0, 
+           se_prior = 99999999999999999999999999999999999999999999999999999999999999999999999, 
+           df_prior = 10000)
 
 # Scheibe et al 2015 mean difference:
 prop.young.scheibe <- 0.405
@@ -109,7 +143,39 @@ TOSTtwo.bf(m1 = m.older,
            effect_prior = 0, 
            se_prior = 0.04, 
            df_prior = 10000) # df from scheibe
-# B = 0.41
+# B = 0.65
+
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "halfnormal", 
+           effect_prior = 0, 
+           se_prior = 0.000000000000000000000000000000000000000000000000000000000000000000000001,  # 0?
+           df_prior = 10000)
+
+# Identifying RR upper
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "halfnormal", 
+           effect_prior = 0, 
+           se_prior = 0.189, 
+           df_prior = 10000)
+
 ## This is an example where the direction of the prediction (e.g. oldprop - young prop = +0.08) will
 ## affect the way that users will need to enter m1 and m2. In this example the obtained mdiff is in the 
 ## opposite direction to that predicted by Schiebe. If you enter m1=m.younger and m2=m.older, then
