@@ -5,7 +5,8 @@ source('DienesMcLatchie.R')
 
 # Example data from Gerontology Article:
 # Bunce, Batterham & Mackinnon (2018)
-# Found non-frail adults 
+# reported that non-frail adults (M=11.53, SD=3.52, N=304) recalled significantly more names of animals than frail adults (M=10.11, SD=3.20, N=154), 
+# t(456)=4.20, p<.001
 
 # Need: SE from a previous study 
 bunce.se <- (11.53-10.11) / 4.20 # 0.3380952
