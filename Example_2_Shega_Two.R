@@ -28,11 +28,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
-# B=0.038182
+# B=0.144347
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -44,11 +44,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.322,
+               se_prior = 0.46,
                df_prior = 100000)
-# B = 0.335796
+# B = 0.330005
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,
@@ -60,11 +60,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 999999999999999999999999999999999999999999999999999999,
+               se_prior = 99,
                df_prior = 100000)
-# B = 0.001995
+# B = 0
 
 
 
@@ -89,11 +89,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
-# B= 0.099278
+# B= 0.048288
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -105,9 +105,9 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.868,
+               se_prior = 0.13,
                df_prior = 100000)
 # B = 0.335156
 
@@ -121,10 +121,10 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
-               effect_prior = 9999999999999999999999999999999999999999999999999999999999999999999999999999999,
+               prior_dist = "halfnormal", 
+               effect_prior = 99,
                df_prior = 100000)
-# B = 0.00027
+# B = 0
 
 
 
@@ -151,11 +151,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
-# B = 0.062207
+# B = 0.070476
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -167,11 +167,11 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.530,
+               se_prior = 0.21,
                df_prior = 100000)
-# B = 0.335334
+# B = 0.327209
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,
@@ -183,7 +183,7 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
-               effect_prior = 9999999999999999999999999999999999999999999999999999999999999999999999999999999,
+               prior_dist = "halfnormal", 
+               effect_prior = 99,
                df_prior = 100000)
-# B = 0.00027
+# B = 0
