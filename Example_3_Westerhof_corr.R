@@ -7,28 +7,43 @@ n <- 218
 r <- 0.12
 sesoi <- 0.14  # Since the authors treat this as an interesting correlation, and treat a correlation of .12 as small enough to consider 0, we can assume that .14 is quite close to their smalles effect size of interest (which is of course wrong, as they later judge another .12 correlation to be interesting when it is significant)
 
-# BF = no other knowledge, other than it is a correlation test.
+
+
+# BF = based on authors interpreting 0.14 as meaningful
+# raw slope = 0.14 * 4.2/3 = 0.20
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "normal", 
+         prior_dist = "halfnormal", 
          effect_prior = 0, 
-         se_prior = 0.5, 
+         se_prior = 0.20,  
          df_prior = 10000)
+# B = 2.487562
 
-# BF = no other knowledge than the average effect size in psychology
-# Based on median effect size in Psychology (Aczel, Palfi & Szaszi, 2017)
-# d converted to r: https://www.psychometrica.de/effect_size.html
+
+
+# BF = Lower region
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "normal", 
+         prior_dist = "halfnormal", 
          effect_prior = 0, 
-         se_prior = 0.4216/2,  
+         se_prior = 0.123,  
          df_prior = 10000)
+# B = 2.487562
 
+
+# BF = Lower region
+TOSTr.bf(n = n, 
+         r = r, 
+         low_eqbound_r = -sesoi, 
+         high_eqbound_r = sesoi, 
+         prior_dist = "halfnormal", 
+         effect_prior = 0, 
+         se_prior = 1.848,  
+         df_prior = 10000)# B = 2.487562
 
 # Converting standardised to raw units
 # r x (SD Despair)/(SD Openness)
@@ -45,17 +60,18 @@ df <- 218-2
 h1 <- (5-1)/(6-1)  # 0.80
 
 
-source("TOSTtwo.raw.bf.R")
-BF_t(0, h1, 100000, b.obtained, se.obtained, df, tail = 1) # 0.679599
-1/sqrt(218-3)
-
-## Question - is it appropriate to calculate a raw coefficient using the tostr.bf function?
-
-TOSTr.bf(n = 218, 
-         r = b.obtained, 
+# BF = based on correlation heuristic
+# raw slope = 0.14 * 4.2/3 = 0.20
+TOSTr.bf(n = n, 
+         r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
          prior_dist = "halfnormal", 
          effect_prior = 0, 
-         se_prior = h1,  
+         se_prior = 0.40,  
          df_prior = 10000)
+# B = 1.468118
+
+
+
+
