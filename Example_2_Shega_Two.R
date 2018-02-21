@@ -28,10 +28,45 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
+# B=0.144347
+
+# RR lower
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 0,
+               se_prior = 0.46,
+               df_prior = 100000)
+# B = 0.330005
+
+# RR upper
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 0,
+               se_prior = 99,
+               df_prior = 100000)
+# B = 0
+
+
 
 
 # Descriptive statistics for Age group 70-79 (1) and >80 (2)
@@ -54,10 +89,45 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
+# B= 0.048288
+
+# RR lower
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 0,
+               se_prior = 0.13,
+               df_prior = 100000)
+# B = 0.335156
+
+# RR upper
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 99,
+               df_prior = 100000)
+# B = 0
+
+
+
 
 
 
@@ -81,7 +151,39 @@ TOSTtwo.raw.bf(m1 = m1,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
-               prior_dist = "normal", 
+               prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 3,
+               se_prior = 1.1,
                df_prior = 100000)
+# B = 0.070476
+
+# RR lower
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 0,
+               se_prior = 0.21,
+               df_prior = 100000)
+# B = 0.327209
+
+# RR upper
+TOSTtwo.raw.bf(m1 = m1,
+               m2 = m2,
+               sd1 = sd1,
+               sd2 = sd2,
+               n1 = n1,
+               n2 = n2,
+               low_eqbound = -sesoi.lik,
+               high_eqbound = sesoi.lik, 
+               var.equal = FALSE, 
+               prior_dist = "halfnormal", 
+               effect_prior = 99,
+               df_prior = 100000)
+# B = 0
