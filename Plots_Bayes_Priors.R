@@ -53,7 +53,7 @@ plot(x = x,
 segments(-6,0,6,0, col='black', lwd=1)      # Add a line for x-axis
 #segments(0, 0, 0, 2, col= 'black', lwd=1)                # Add a black line at x=0
 arrows(0, 0.37, 3, 0.37, col= 'black', lwd=2, length = 0.05, code = 3)
-text(1.5, 0.42, paste("Expected Effects"), cex = 0.9)   # Add label
+text(1.5, 0.42, paste("Expected Effect"), cex = 0.9)   # Add label
 Axis(side=1,at=0,labels=0,lty=0)
 #Axis(side=2,at=0,labels=0,lty=0)
 Axis(side=1, labels=FALSE)
