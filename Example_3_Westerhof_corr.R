@@ -1,13 +1,9 @@
 # Example 3. Westerhof, Bohlmeijer & McAdams (2015) predicts that Big Five NEO-FFI openness should be related to Ego integrity. 
 # The authors conclude "higher levels of openness to experience are significantly related to more ego integrity but not to despair." after finding a significant .14 correlation between openness and ego integrity, and a non-significant .12 correlation between openness and despair.
-
 source("TOSTr.bf.R")
-
 n <- 218
 r <- 0.12
 sesoi <- 0.14  # Since the authors treat this as an interesting correlation, and treat a correlation of .12 as small enough to consider 0, we can assume that .14 is quite close to their smalles effect size of interest (which is of course wrong, as they later judge another .12 correlation to be interesting when it is significant)
-
-
 
 # BF = based on authors interpreting 0.14 as meaningful
 # raw slope = 0.14 * 4.2/3 = 0.20
@@ -15,35 +11,33 @@ TOSTr.bf(n = n,
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.20,  
+         prior_dist = "normal", 
+         effect_prior = .2, 
+         se_prior = 0.10,  
          df_prior = 10000)
-# B = 2.487562
-
-
+# B = 2.128398
 
 # BF = Lower region
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.123,  
+         prior_dist = "normal", 
+         effect_prior = .154, 
+         se_prior = .154/2,  
          df_prior = 10000)
-# B = 2.487562
+# B = 2.977742
 
-
-# BF = Lower region
+# BF = Upper region
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 1.848,  
+         prior_dist = "normal", 
+         effect_prior = .490, 
+         se_prior = .490/2,  
          df_prior = 10000)# B = 2.487562
+# 0.336237
 
 # Converting standardised to raw units
 # r x (SD Despair)/(SD Openness)
@@ -59,7 +53,6 @@ df <- 218-2
 # H1 prediction
 h1 <- (5-1)/(6-1)  # 0.80
 
-
 # BF = based on correlation heuristic
 # raw slope = 0.14 * 4.2/3 = 0.20
 TOSTr.bf(n = n, 
@@ -71,7 +64,3 @@ TOSTr.bf(n = n,
          se_prior = 0.40,  
          df_prior = 10000)
 # B = 1.468118
-
-
-
-

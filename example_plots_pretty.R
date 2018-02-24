@@ -63,9 +63,9 @@ TOSTr.bf.prettyplot(n = n,
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.20,  
+         prior_dist = "normal", 
+         effect_prior = 0.2, 
+         se_prior = 0.10,  
          df_prior = 10000)
 
 #Example 4
