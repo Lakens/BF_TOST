@@ -98,9 +98,9 @@ TOSTtwo.bf(m1 = m.older,
            var.equal = FALSE, 
            prior_dist = "halfnormal", 
            effect_prior = 0, 
-           se_prior = 0.04, 
+           se_prior = 0.08, 
            df_prior = 10000) # df from scheibe
-# B = 0.65
+# B = 0.42
 
 TOSTtwo.bf(m1 = m.younger, 
            m2 = m.older, 
