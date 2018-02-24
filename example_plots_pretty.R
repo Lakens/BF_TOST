@@ -1,33 +1,25 @@
-source("TOSTtwo.bf.prettyplot.R")
-
 #Example 1
-n.younger.scheibe <- 38
-n.older.scheibe <- 39
-t.crit <- qt(1-0.05/2, (n.younger.scheibe + n.older.scheibe)-2)
-d.crit <- t.crit * sqrt((1/n.younger.scheibe)+(1/n.older.scheibe))
+source('TOSTtwo.bf.prettyplot.R') #Load function for standardized mean differences
 
-n.younger <- 32
-n.older <- 32
-m.younger <- 0.338 # NB! The means and standard deviations used in this example are NOT perfectly equal to those reported in Martins, Sheppes, Gross, and Mather (2016). Probably due to rounding of reported values, the numbers provided in the paper does not lead us to arrive at the same t statistic as the one reported in the paper. We therefore changed the mean and standard deviation values to be as close as possible to numbers that would replicate the t statistic reported. 
-sd.younger <- 0.0344 * sqrt(n.younger) 
-m.older <- 0.321 
-sd.older <- 0.0344 * sqrt(n.older) 
+prop.young.scheibe <- 0.405
+prop.old.scheibe <- 0.485
+prior.dif <- prop.young.scheibe - prop.old.scheibe # -0.08
+obtained.df <- m.younger-m.older # 0.017
 
-TOSTtwo.bf.prettyplot(m1 = m.younger, 
-                      m2 = m.older, 
-                      sd1 = sd.younger, 
-                      sd2 = sd.older, 
-                      n1 = n.younger, 
-                      n2 = n.older, 
-                      low_eqbound_d = -d.crit, 
-                      high_eqbound_d = d.crit, 
-                      alpha = 0.05, 
-                      var.equal = FALSE, 
-                      prior_dist = "halfnormal", 
-                      effect_prior = 0, 
-                      se_prior = 0.189, 
-                      df_prior = 10000)
-
+TOSTtwo.bf.prettyplot(m1 = m.older, 
+           m2 = m.younger, 
+           sd1 = sd.older, 
+           sd2 = sd.younger, 
+           n1 = n.older, 
+           n2 = n.younger, 
+           low_eqbound_d = -d.crit, 
+           high_eqbound_d = d.crit, 
+           alpha = 0.05, 
+           var.equal = FALSE, 
+           prior_dist = "halfnormal", 
+           effect_prior = 0, 
+           se_prior = 0.04, 
+           df_prior = 10000) # df from scheibe
 
 #Example 2
 
@@ -51,6 +43,7 @@ TOSTtwo.raw.bf.prettyplot(m1 = m1,
                n2 = n2,
                low_eqbound = -sesoi.lik,
                high_eqbound = sesoi.lik, 
+               alpha = 0.05/3,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
