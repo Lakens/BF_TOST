@@ -1,10 +1,25 @@
 #Example 1
-source('TOSTtwo.bf.prettyplot.R') #Load function for standardized mean differences
+source('plots/TOSTtwo.bf.prettyplot.R') #Load function for standardized mean differences
+
+n.younger <- 32
+n.older <- 32
+m.younger <- 0.338 # NB! The means and standard deviations used in this example are NOT perfectly equal to those reported in Martins, Sheppes, Gross, and Mather (2016). Probably due to rounding of reported values, the numbers provided in the paper does not lead us to arrive at the same t statistic as the one reported in the paper. We therefore changed the mean and standard deviation values to be as close as possible to numbers that would replicate the t statistic reported. 
+sd.younger <- 0.0344 * sqrt(n.younger) 
+m.older <- 0.321 
+sd.older <- 0.0344 * sqrt(n.older) 
 
 prop.young.scheibe <- 0.405
 prop.old.scheibe <- 0.485
 prior.dif <- prop.young.scheibe - prop.old.scheibe # -0.08
 obtained.df <- m.younger-m.older # 0.017
+
+# Previous study: Scheibe et al. (2015)
+n.younger.scheibe <- 38
+n.older.scheibe <- 39
+
+# calculating critical effect size for Scheibe et al. (2015)
+t.crit <- qt(1-0.05/2, (n.younger.scheibe + n.older.scheibe)-2)
+d.crit <- t.crit * sqrt((1/n.younger.scheibe)+(1/n.older.scheibe))
 
 TOSTtwo.bf.prettyplot(m1 = m.older, 
            m2 = m.younger, 
@@ -23,7 +38,7 @@ TOSTtwo.bf.prettyplot(m1 = m.older,
 
 #Example 2
 
-source('TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
+source('plots/TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
 
 sesoi.vas <- 9  # On a 100mm visual analogue scale, 12mm 95%CI[9mm, 15mm] seems to be the clinical Minimally Important Difference for chronic pain ratings (see Kelly [2001]). We can pick a conservative estimate by choosing the lower end of this CI as our SESOI.
 sesoi.lik <- sesoi.vas*((7-1)/(100-1))  # Need to convert the MID to Lickert scale, 
@@ -50,7 +65,7 @@ TOSTtwo.raw.bf.prettyplot(m1 = m1,
                se_prior = 1.21,
                df_prior = 100000)
 
-source("TOSTr.bf.prettyplot.R")
+source("plots/TOSTr.bf.prettyplot.R")
 
 n <- 218
 r <- 0.12
@@ -69,7 +84,7 @@ TOSTr.bf.prettyplot(n = n,
 
 #Example 4
 
-source('TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
+source('plots/TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
 
 ## Short delay condition
 sd1 <- sqrt(0.17^2+0.14^2-(2*0.85*0.14*0.17))

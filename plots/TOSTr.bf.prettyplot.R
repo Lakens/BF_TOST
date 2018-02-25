@@ -147,7 +147,7 @@ TOSTr.bf.prettyplot<-function(n, r, low_eqbound_r, high_eqbound_r, alpha, plot =
     max_per_x = apply(data,1,max)
     max_x_keep = max_per_x/maxy*100 > myminY  # threshold (1%) here
     x_keep = which(max_x_keep==1)
-    png(file=paste("Fig1.png",sep=""),width=2300,height=2000, units = "px", res = 300)
+    jpeg(file=paste("Fig1.jpg",sep=""),width=2300,height=2000, units = "px", res = 300)
     plot(NA, ylim=c(0,maxy), xlim=c(min(LL90,low_eqbound_r)-max(UL90-LL90, high_eqbound_r-low_eqbound_r)/5, max(UL90,high_eqbound_r)+max(UL90-LL90, high_eqbound_r-low_eqbound_r)/5), bty="l", yaxt="n", ylab="",xlab="Correlation")
     points(x=r, y=maxy/2, pch=15, cex=2)
     abline(v=high_eqbound_r, lty=2)

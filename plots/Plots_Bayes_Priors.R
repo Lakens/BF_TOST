@@ -6,7 +6,7 @@ library(extrafont)
 loadfonts()
 fonts()
 
-png(file="Fig2.png",width=4000,height=2500, res = 500)
+jpeg(file="Fig2.jpg",width=4000,height=2500, res = 500)
 
 par(mfrow = c(2, 2), mar=c(3.5,3,1.5,1), family = "Segoe UI")
 # Note: if I wanted a different layout:
