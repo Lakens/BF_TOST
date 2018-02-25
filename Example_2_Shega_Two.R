@@ -7,9 +7,7 @@ source('TOSTtwo.raw.bf.R') #Load function for standardized mean differences
 sesoi.vas <- 9  # On a 100mm visual analogue scale, 12mm 95%CI[9mm, 15mm] seems to be the clinical Minimally Important Difference for chronic pain ratings (see Kelly [2001]). We can pick a conservative estimate by choosing the lower end of this CI as our SESOI.
 sesoi.lik <- sesoi.vas*((7-1)/(100-1))  # Need to convert the MID to Lickert scale, 
 
-
 # Descriptive statistics for Age group 62-69 (1) and 70-79 (2)
-
 m1 <- 2.03
 m2 <- 1.98
 n1 <- 1020
@@ -18,7 +16,6 @@ sd1 <- 0.084*sqrt(n1)
 sd2 <- 0.057*sqrt(n2)
 
 # Calculate TOST and BF
-
 TOSTtwo.raw.bf(m1 = m1,
                m2 = m2,
                sd1 = sd1,
@@ -31,11 +28,11 @@ TOSTtwo.raw.bf(m1 = m1,
                alpha = 0.05/3,
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 1.1,
+               se_prior = 1.21,
                df_prior = 100000)
-# B=0.144347
+# B=0.128
 
-# RR lower
+# Rob Reg lower
 TOSTtwo.raw.bf(m1 = m1,
                m2 = m2,
                sd1 = sd1,
@@ -48,11 +45,11 @@ TOSTtwo.raw.bf(m1 = m1,
                alpha = 0.05/3,
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.46,
+               se_prior = 0.454,
                df_prior = 100000)
-# B = 0.330005
+# B = 0.3340005
 
-# RR upper
+# Rob Reg upper
 TOSTtwo.raw.bf(m1 = m1,
                m2 = m2,
                sd1 = sd1,
@@ -69,11 +66,7 @@ TOSTtwo.raw.bf(m1 = m1,
                df_prior = 100000)
 # B = 0
 
-
-
-
 # Descriptive statistics for Age group 70-79 (1) and >80 (2)
-
 m1 <- 1.98
 m2 <- 2.14
 n1 <- 1015
@@ -82,7 +75,6 @@ sd1 <- 0.057*sqrt(n1)
 sd2 <- 0.102*sqrt(n2)
 
 # Calculate TOST and BF
-
 TOSTtwo.raw.bf(m1 = m1,
                m2 = m2,
                sd1 = sd1,
@@ -95,9 +87,9 @@ TOSTtwo.raw.bf(m1 = m1,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 1.1,
+               se_prior = 1.21,
                df_prior = 100000)
-# B= 0.048288
+# B= 0.040277
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -112,9 +104,9 @@ TOSTtwo.raw.bf(m1 = m1,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.13,
+               se_prior = 0.136,
                df_prior = 100000)
-# B = 0.335156
+# B = 0.33335
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,
@@ -132,13 +124,7 @@ TOSTtwo.raw.bf(m1 = m1,
                df_prior = 100000)
 # B = 0
 
-
-
-
-
-
 # Descriptive statistics for Age group 62-69 (1) and >80 (2)
-
 m1 <- 2.03
 m2 <- 2.14
 n1 <- 1020
@@ -147,7 +133,6 @@ sd1 <- 0.084*sqrt(n1)
 sd2 <- 0.102*sqrt(n2)
 
 # Calculate TOST and BF
-
 TOSTtwo.raw.bf(m1 = m1,
                m2 = m2,
                sd1 = sd1,
@@ -160,9 +145,9 @@ TOSTtwo.raw.bf(m1 = m1,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 1.1,
+               se_prior = 1.21,
                df_prior = 100000)
-# B = 0.070476
+# B = 0.060553
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -177,9 +162,9 @@ TOSTtwo.raw.bf(m1 = m1,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 0.21,
+               se_prior = 0.205,
                df_prior = 100000)
-# B = 0.327209
+# B = 0.333864
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,

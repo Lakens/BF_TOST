@@ -47,9 +47,8 @@ TOSTtwo.raw.bf.prettyplot(m1 = m1,
                var.equal = FALSE, 
                prior_dist = "halfnormal", 
                effect_prior = 0,
-               se_prior = 1.1,
+               se_prior = 1.21,
                df_prior = 100000)
-
 
 source("TOSTr.bf.prettyplot.R")
 
