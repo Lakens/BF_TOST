@@ -1,3 +1,4 @@
+#Create Figure 2
 # Tell R to create four graphs that I'd like to appear in a 2x2 format
 
 #install.packages('extrafont')
@@ -6,7 +7,7 @@ library(extrafont)
 loadfonts()
 fonts()
 
-jpeg(file="Fig2.jpg",width=4000,height=2500, res = 500)
+tiff(file="Fig2.tiff",width=4000,height=2500, res = 500)
 
 par(mfrow = c(2, 2), mar=c(3.5,3,1.5,1), family = "Segoe UI")
 # Note: if I wanted a different layout:

@@ -1,4 +1,9 @@
+#This script creates Figures in the main document
+#These differs differ slihtly from the default TOSTER output for publication purposes.
+#Run each example - the output will be names Fig1. Rename it (or the next example will overwrite it).
+
 #Example 1
+#Figure 3
 source('plots/TOSTtwo.bf.prettyplot.R') #Load function for standardized mean differences
 
 n.younger <- 32
@@ -37,7 +42,7 @@ TOSTtwo.bf.prettyplot(m1 = m.older,
            df_prior = 10000) # df from scheibe
 
 #Example 2
-
+#Figure 4
 source('plots/TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
 
 sesoi.vas <- 9  # On a 100mm visual analogue scale, 12mm 95%CI[9mm, 15mm] seems to be the clinical Minimally Important Difference for chronic pain ratings (see Kelly [2001]). We can pick a conservative estimate by choosing the lower end of this CI as our SESOI.
@@ -65,6 +70,8 @@ TOSTtwo.raw.bf.prettyplot(m1 = m1,
                se_prior = 1.21,
                df_prior = 100000)
 
+#Example 3
+#Figure 5
 source("plots/TOSTr.bf.prettyplot.R")
 
 n <- 218
@@ -83,6 +90,7 @@ TOSTr.bf.prettyplot(n = n,
          df_prior = 10000)
 
 #Example 4
+#Figure 6
 
 source('plots/TOSTtwo.raw.bf.prettyplot.R') #Load function for standardized mean differences
 

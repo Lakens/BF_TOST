@@ -1,3 +1,4 @@
+#Creates Figure 1
 ####  Setup ----------------------------------------
 library(ggplot2)
 library(gridExtra)
@@ -46,6 +47,6 @@ eqplot <- baseplot +
   theme(plot.title = element_text(hjust = 0.5, family = "Segoe UI")) +
   theme(axis.text.x = element_text(family = "Segoe UI")) 
 
-jpeg(file="Model_Plot.jpg",width=4000,height=1200, res = 500)
-grid.arrange(NHSTplot, eqplot, ncol = 2) #combine plots in two columns (all stacked)
+tiff(file="Model_Plot.tiff",width=2000,height=2400, res = 500)
+grid.arrange(NHSTplot, eqplot, ncol = 1) #combine plots in two columns (all stacked)
 dev.off()
