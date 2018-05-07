@@ -6,16 +6,16 @@ r <- 0.12
 sesoi <- 0.14  # Since the authors treat this as an interesting correlation, and treat a correlation of .12 as small enough to consider 0, we can assume that .14 is quite close to their smalles effect size of interest (which is of course wrong, as they later judge another .12 correlation to be interesting when it is significant)
 
 # BF = based on authors interpreting 0.14 as meaningful
-# raw slope = 0.14 * 4.2/3 = 0.20
+# raw slope = 0.14 * 0.8/0.6 = 0.19
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
          prior_dist = "normal", 
-         effect_prior = .2, 
-         se_prior = 0.10,  
+         effect_prior = 0.19, 
+         se_prior = 0.095,  
          df_prior = 10000)
-# B = 2.128398
+# B = 2.297343
 
 # BF = Lower region
 TOSTr.bf(n = n, 
@@ -23,8 +23,8 @@ TOSTr.bf(n = n,
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
          prior_dist = "normal", 
-         effect_prior = .154, 
-         se_prior = .154/2,  
+         effect_prior = .153, 
+         se_prior = .153/2,  
          df_prior = 10000)
 # B = 2.977742
 
@@ -39,9 +39,12 @@ TOSTr.bf(n = n,
          df_prior = 10000)# B = 2.487562
 # 0.336237
 
+
+
+
 # Converting standardised to raw units
 # r x (SD Despair)/(SD Openness)
-b.obtained <- 0.12 * 2.9/3.0 # 0.116 
+b.obtained <- 0.12 * 1.0/0.6 # 0.20 
 
 # Raw SE
 # 1/sqrt(N-3)
