@@ -11,31 +11,31 @@ TOSTr.bf(n = n,
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "normal", 
-         effect_prior = 0.19, 
-         se_prior = 0.095,  
+         prior_dist = "halfnormal", 
+         effect_prior = 0, 
+         se_prior = 0.19,  
          df_prior = 10000)
-# B = 2.297343
+# B = 2.56111
 
 # BF = Lower region
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "normal", 
-         effect_prior = .153, 
-         se_prior = .153/2,  
+         prior_dist = "halfnormal", 
+         effect_prior = 0, 
+         se_prior = 0.124,  
          df_prior = 10000)
-# B = 2.977742
+# B = 2.996933
 
 # BF = Upper region
 TOSTr.bf(n = n, 
          r = r, 
          low_eqbound_r = -sesoi, 
          high_eqbound_r = sesoi, 
-         prior_dist = "normal", 
-         effect_prior = .490, 
-         se_prior = .490/2,  
+         prior_dist = "halfnormal", 
+         effect_prior = 0, 
+         se_prior = 1.89,  
          df_prior = 10000)# B = 2.487562
 # 0.336237
 
