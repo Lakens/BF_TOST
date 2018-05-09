@@ -24,7 +24,7 @@ TOSTr.bf(n = n,
          high_eqbound_r = sesoi, 
          prior_dist = "halfnormal", 
          effect_prior = 0, 
-         se_prior = 0.124,  
+         se_prior = 0.125,  
          df_prior = 10000)
 # B = 2.996933
 
@@ -35,7 +35,7 @@ TOSTr.bf(n = n,
          high_eqbound_r = sesoi, 
          prior_dist = "halfnormal", 
          effect_prior = 0, 
-         se_prior = 1.89,  
+         se_prior = 1.87,  
          df_prior = 10000)# B = 2.487562
 # 0.336237
 
