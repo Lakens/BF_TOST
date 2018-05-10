@@ -26,7 +26,7 @@ RStudio is a free integrated development environment (IDE) for R. It can be inst
 After installation, open R or Rstudio. In the console window, run the following command: 
 
 ```{r echo=TRUE, eval=FALSE}
-eval=false, install.packages("TOSTER")
+install.packages("TOSTER")
 ```
 
 This will download and install the R package TOSTER from CRAN. The TOSTER package contains a wide variety of functions relevant for conducting equivalence tests, including functions for performing power analysis for an equivalence test. A more comprehensive introduction to the package can be found [here](https://cran.rstudio.com/web/packages/TOSTER/vignettes/IntroductionToTOSTER.html). 
