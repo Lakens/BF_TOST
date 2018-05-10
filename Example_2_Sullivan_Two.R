@@ -19,3 +19,18 @@
 # 
 # CONCLUSION
 # In this case, a relevant past study was hard to find to fix the scaling of the effect. However, one can sometimes extract information from the study itself to put rough limits on what size effects could be obtained. Note one thing we did not do: We did use the very difference we were testing as the scale factor for predicting that difference. That would be double counting the same mean difference twice, once for making the prediction and twice for the testing of the prediction. We used the data for constraining predictions, leaving degrees for freedom for the difference to match or mismatch those predictions.  Finally, a consideration of robustness turned out to be important for how seriously to take the conclusions.
+
+source("TOSTtwo.bf.R") #Load function for standardized mean differences
+
+m.oldm <- 0.673646266 #Percentage time spent looking at the eyes (recalculated values from table 2)
+m.oldf <- 0.656557886
+m.yngm <- 0.649131167
+m.yngf <- 0.759139802
+sd.oldm <- 
+sd.oldf
+sd.yngm
+sd.yngf
+n.oldm <- 28
+n.oldf <- 30
+n.yngm <- 30
+n.yngf <- 30

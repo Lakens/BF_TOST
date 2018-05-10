@@ -132,3 +132,18 @@ p.tost.l <- pnorm(q = z, mean = bound.l/se, lower.tail = FALSE)
 
 p.nhst  # NHST result
 max(p.tost.l, p.tost.u)  # TOST result
+
+
+source("TOSTz2.raw.bf.R")
+
+TOSTz2.raw.bf(es = m,
+              se = se, 
+              n = 6363, 
+              k = 5, 
+              low_eqbound = -0.1, 
+              high_eqbound = 0.1, 
+              prior_dist = "normal", 
+              effect_prior = 0, 
+              se_prior = 2.5, 
+              df_prior = 10000)
+
