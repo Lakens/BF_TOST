@@ -30,7 +30,8 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi, 
                var.equal = TRUE, 
                prior_dist = "halfnormal", 
-               effect_prior = prior_bf,
+               effect_prior = 0,
+               se_prior = prior_bf,
                df_prior = 62)
 # B = 0.43819
 
@@ -46,9 +47,10 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi, 
                var.equal = TRUE, 
                prior_dist = "halfnormal", 
-               effect_prior =.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,
+               effect_prior =0,
+               se_prior = 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001,
                df_prior = 62)
-# B = 0.323365
+# B = 1
 
 
 # BF upper
@@ -62,7 +64,8 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi, 
                var.equal = TRUE, 
                prior_dist = "halfnormal", 
-               effect_prior = 0.0540,
+               effect_prior = 0,
+               se_prior = 0.054,
                df_prior = 62)
 # B = 0.323365
 
