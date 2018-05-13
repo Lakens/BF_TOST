@@ -47,7 +47,7 @@ TOSTtwo.bf(m1 = m.younger,
            effect_prior = 0, 
            se_prior = 0.5, 
            df_prior = 10000) # df from scheibe
-# 0.13
+# B = 0.13
 
 # Identifying RR lower
 TOSTtwo.bf(m1 = m.younger, 
@@ -64,6 +64,7 @@ TOSTtwo.bf(m1 = m.younger,
            effect_prior = 0, 
            se_prior = 0.147, 
            df_prior = 10000)
+# B = 0.13
 
 # Identifying RR upper
 TOSTtwo.bf(m1 = m.younger, 
@@ -80,6 +81,7 @@ TOSTtwo.bf(m1 = m.younger,
            effect_prior = 0, 
            se_prior = 99999999999999999999999999999999999999999999999999999999999999999999999, 
            df_prior = 10000)
+# B = 0.13
 
 
 # Scheibe et al 2015 mean difference:
