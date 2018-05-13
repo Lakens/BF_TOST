@@ -122,7 +122,7 @@ TOSTtwo.raw.bf(m1 = m1,
                prior_dist = "halfnormal", 
                effect_prior = 1.361,
                df_prior = 100000)
-# B = 0.333955
+# B = 0.336368
 
 # Descriptive statistics for Example 2c: Age group 62-69 (1) and >80 (2)
 m1 <- 2.14
