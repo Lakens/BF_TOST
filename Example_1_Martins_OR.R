@@ -19,7 +19,7 @@ d.crit <- t.crit * sqrt((1/n.younger.scheibe)+(1/n.older.scheibe))
 
 ### Martins et al.
 # Distraction preferences as % of trials in which distraction was chosen (for NEGATIVE images)
-# from the paper (p. 6): "age-related differences in strategy choice for negative images, (Myoung = 0.34 ± 0.03; Molder = 0.32 ± 0.03), t(62) = 0.35, p = .73, d = 0.09 (see Figure 2)."
+# from the paper (p. 6): "age-related differences in strategy choice for negative images, (Myoung = 0.34 ? 0.03; Molder = 0.32 ? 0.03), t(62) = 0.35, p = .73, d = 0.09 (see Figure 2)."
 
 
 n.younger <- 32
@@ -33,12 +33,12 @@ sd.older <- 0.0344 * sqrt(n.older)
 
 # Bayes factor - treating the proportions as two intervals and running a t-test
 # Based on range (can't be bigger than 1)
-TOSTtwo.bf(m1 = m.older, 
-           m2 = m.younger, 
-           sd1 = sd.older, 
-           sd2 = sd.younger, 
-           n1 = n.older, 
-           n2 = n.younger, 
+TOSTtwo.bf(m1 = m.younger, 
+           m2 = m.older, 
+           sd1 = sd.younger, 
+           sd2 = sd.older, 
+           n1 = n.younger, 
+           n2 = n.older, 
            low_eqbound_d = -d.crit, 
            high_eqbound_d = d.crit, 
            alpha = 0.05, 
@@ -47,7 +47,7 @@ TOSTtwo.bf(m1 = m.older,
            effect_prior = 0, 
            se_prior = 0.5, 
            df_prior = 10000) # df from scheibe
-# 0.07
+# 0.13
 
 # Identifying RR lower
 TOSTtwo.bf(m1 = m.younger, 
@@ -80,6 +80,7 @@ TOSTtwo.bf(m1 = m.younger,
            effect_prior = 0, 
            se_prior = 99999999999999999999999999999999999999999999999999999999999999999999999, 
            df_prior = 10000)
+
 
 # Scheibe et al 2015 mean difference:
 prop.young.scheibe <- 0.405
@@ -116,6 +117,7 @@ TOSTtwo.bf(m1 = m.younger,
            effect_prior = 0, 
            se_prior = 0.000000000000000000000000000000000000000000000000000000000000000000000001,  # 0?
            df_prior = 10000)
+# B = 1
 
 # Identifying RR upper
 TOSTtwo.bf(m1 = m.younger, 
@@ -130,8 +132,9 @@ TOSTtwo.bf(m1 = m.younger,
            var.equal = FALSE, 
            prior_dist = "halfnormal", 
            effect_prior = 0, 
-           se_prior = 0.189, 
+           se_prior = 0.188, 
            df_prior = 10000)
+# B = 0.335229
 
 ## This is an example where the direction of the prediction (e.g. oldprop - young prop = +0.08) will
 ## affect the way that users will need to enter m1 and m2. In this example the obtained mdiff is in the 
