@@ -80,4 +80,4 @@ Running this command will provide you with the following output, summarizing the
 TOSTtwo.bf(m1 = group1_mean, m2 = group2_mean, sd1 = group1_stdev, sd2 = group2_stdev, n1 = group1_n, n2 = group2_n, low_eqbound_d = lower_bound, high_eqbound_d = upper_bound, alpha = 0.05, prior_dist = "normal", effect_prior = prior_bf, df_prior = prior_degfree)
 ```
 
-Notice that in the plot, the position of the stipled lines representing the upper and lower equivalence bounds are not consistent with the equivalence bound values we defined in step 4. This is because the `TOSTtwo()` function recalculates the bound values from Cohen's d back into the raw scale (based on the standard deviations provided in the function input) before plotting. 
+Notice that in the plot, the position of the dashed lines representing the upper and lower equivalence bounds are not consistent with the equivalence bound values we defined in step 4. This is because the `TOSTtwo()` function recalculates the bound values from Cohen's d back into the raw scale (based on the standard deviations provided in the function input) before plotting. 
