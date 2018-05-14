@@ -2,6 +2,7 @@
 # The authors conclude "higher levels of openness to experience are significantly related to more ego integrity but not to despair." after finding a significant .14 correlation between openness and ego integrity, and a non-significant .12 correlation between openness and despair.
 source('TOSTtwo.raw.bf.R') #Load function for raw mean differences
 source("TOSTr.bf.R")
+source("Wiens_functions/DienesMcLatchie.R")
 
 n <- 218
 r <- 0.12
@@ -19,18 +20,6 @@ b.obtained <- 0.12 * 1.0/0.6 # 0.20
 
 
 
-# What we did previously (and incorrectly)
-# Used r (and subsequent fishers z) to model the data and b to specify the prior.
-TOSTr.bf(n = 218, 
-         r = 0.12, 
-         low_eqbound_r = -sesoi, 
-         high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.19,  
-         df_prior = 10000)
-# B = 2.56111
-
 # Option A: Specify using standardised effect r (and the calculator while transform both using fisher's z)
 TOSTr.bf(n = 218, 
          r = 0.12, 
@@ -42,55 +31,23 @@ TOSTr.bf(n = 218,
          df_prior = 10000)
 # B = 2.915786
 
+
 # Option B: Specify using raw effects (will still be transformed, but won't make a difference)
-# Need to check SEM of beta coefficient is being calculated correctly.
-# This also doesn't work for the equivalence tests, that need to specify standardised r
-TOSTr.bf(n = n, 
-         r = .20, 
-         low_eqbound_r = -sesoi, 
-         high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = .19,  
-         df_prior = 10000)
-# B = 31.63302
+# Not sure what TOSTER function to use for raw coefficients
+# From Zoltan's workings: 
+# Correlation of Openness with Despair = 0.12
+# Fisher???s z = 0.12, SE = 1/???(218-3) = .068.  z-test = 0.12/.068 = 1.76
+# Raw slope of Despair regressed on Openness = r x (SD Despair)/(SD Openness) = 0.12 x 1/0.60 = 0.20 rating units per rating unit.
+# As before, .20/SE = 1.76, and SE of raw slope = 0.114
+BF_t(0, .19, 10000, .20, 0.114, 10000, tail = 1) # 2.98266, Wienes
+BF_t(0, .000000000000000000000000000001, 10000, .20, 0.114, 10000, tail = 1) # 1, Wienes - lower RR
+BF_t(0, 3.024, 10000, .20, 0.114, 10000, tail = 1) # 0.33493, Wienes - upper RR
 
 
 
 
-# BF = based on authors interpreting 0.14 as meaningful
 
-TOSTr.bf(n = n, 
-         r = r, 
-         low_eqbound_r = -sesoi, 
-         high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.19,  
-         df_prior = 10000)
-# B = 2.56111
 
-# BF = Lower region
-TOSTr.bf(n = n, 
-         r = r, 
-         low_eqbound_r = -sesoi, 
-         high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 0.125,  
-         df_prior = 10000)
-# B = 2.996933
-
-# BF = Upper region
-TOSTr.bf(n = n, 
-         r = r, 
-         low_eqbound_r = -sesoi, 
-         high_eqbound_r = sesoi, 
-         prior_dist = "halfnormal", 
-         effect_prior = 0, 
-         se_prior = 1.87,  
-         df_prior = 10000)# B = 2.487562
-# 0.336237
 
 
 

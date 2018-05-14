@@ -131,12 +131,18 @@ TOSTr.bf(n = 218, r = 0.12, low_eqbound_r = -sesoi, high_eqbound_r = sesoi, prio
 Bft( 0.06819943, 0.12058103 , 10000, meanoftheory=0, sdtheory=0.140925576, dftheory=1000, tail=1) # 2.913739
 BF_t(0, 0.140925576, 10000, 0.12058103, 0.06819943, 10000, tail = 1) # 2.922359
 
+
 # Or if we are going to use the raw values, I need to know the correct SE of the obtained beta coefficient.
-# In Zoltan's workings, this is: 0.06819943
-# TOSTER BF = 31.63302
-TOSTr.bf(n = 218, r = 0.20, low_eqbound_r = -sesoi, high_eqbound_r = sesoi, prior_dist = "halfnormal", effect_prior = 0, se_prior = 0.19, df_prior = 10000)
-Bft( 0.06819943, .20 , 10000, meanoftheory=0, sdtheory=0.19, dftheory=1000, tail=1) # 30.28237
-BF_t(0, .19, 10000, .20, 0.06819943, 10000, tail = 1) # 30.4102
+# In Zoltan's workings, this is: 
+# Correlation of Openness with Despair = 0.12
+# Fisher???s z = 0.12, SE = 1/???(218-3) = .068.  z-test = 0.12/.068 = 1.76
+# Raw slope of Despair regressed on Openness = r x (SD Despair)/(SD Openness) = 0.12 x 1/0.60 = 0.20 rating units per rating unit.
+# As before, .20/SE = 1.76, and SE of raw slope = 0.114
+
+# TOSTER BF = ???
+
+Bft( 0.114, .20 , 10000, meanoftheory=0, sdtheory=0.19, dftheory=1000, tail=1) # 2.973956
+BF_t(0, .19, 10000, .20, 0.114, 10000, tail = 1) # 2.98266
 
 
 
