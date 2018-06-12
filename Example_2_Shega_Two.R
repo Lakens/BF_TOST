@@ -26,11 +26,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
                alpha = 0.05/3,
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
                se_prior = 1.21,
                df_prior = 100000)
-# B=0.128074
+# B=0.094322
 
 # Rob Reg lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -43,9 +43,9 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                var.equal = FALSE, 
                alpha = 0.05/3,
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
-               se_prior = 0.454,
+               se_prior = 0.323,
                df_prior = 100000)
 # B = 0.334774
 
@@ -60,11 +60,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
-               se_prior = 97,
+               se_prior = 3000,
                df_prior = 100000)
-# B = 0
+# B = Infinity
 
 # Descriptive statistics for Example 2b: Age group 70-79 (1) and >80 (2)
 m1 <- 2.14
@@ -85,11 +85,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
-               effect_prior = 0,
+               prior_dist = "normal", 
+               effect_prior =0,
                se_prior = 1.21,
                df_prior = 100000)
-# B= 0.37423
+# B= 0.21723
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -102,11 +102,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
-               se_prior = 0.000000000000000000000000000000000000000001,
+               se_prior = 0.767,
                df_prior = 100000)
-# B = 1
+# B = 0.334986
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,
@@ -119,10 +119,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
-               effect_prior = 1.361,
+               prior_dist = "normal", 
+               effect_prior = 0,
+               se_prior = 160,
                df_prior = 100000)
-# B = 0.336368
+# B = 0.001995
 
 # Descriptive statistics for Example 2c: Age group 62-69 (1) and >80 (2)
 m1 <- 2.14
@@ -143,11 +144,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
                se_prior = 1.21,
                df_prior = 100000)
-# B = 0.244819
+# B = 0.161194
 
 # RR lower
 TOSTtwo.raw.bf(m1 = m1,
@@ -160,11 +161,11 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
+               prior_dist = "normal", 
                effect_prior = 0,
-               se_prior = .878,
+               se_prior = .559,
                df_prior = 100000)
-# B = 0.333864
+# B = 0.334657
 
 # RR upper
 TOSTtwo.raw.bf(m1 = m1,
@@ -177,7 +178,7 @@ TOSTtwo.raw.bf(m1 = m1,
                high_eqbound = sesoi.lik, 
                alpha = 0.05/3,
                var.equal = FALSE, 
-               prior_dist = "halfnormal", 
-               effect_prior = 200,
+               prior_dist = "normal", 
+               effect_prior = 10000,
                df_prior = 100000)
-# B = 0
+# B = 0.00027
