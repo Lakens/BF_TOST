@@ -1,0 +1,336 @@
+---
+title: "Lakens et al (2018) examples using Dienes??? (2008) calculator"
+author: "Neil McLatchie"
+date: "19/06/2018"
+output: word_document
+---
+
+
+## Dienes' (2008) Bayes Factor Calculator
+Zoltan Dienes' calculator is located here: http://www.lifesci.sussex.ac.uk/home/Zoltan_Dienes/inference/bayes_factor.swf.  
+  
+The calculator uses Flash Player which many browsers have recently started blocking. You can either change the settings in your default browser, but the calculator usually works in FireFox.
+
+
+## Example 1: Martins, Sheppes, Gross and Mather (2016)
+To calculate a Bayes factor, we need a model of the data. For Dienes' (2008) calculator, that means we need to know the raw effect size and its standard error. These are usually quite easy to obtain. 
+
+First calculate the mean difference for the effect:
+  
+```{r}
+0.338 - 0.321 # young- old
+```
+  
+Recall that Martins et al conducted a t-test: t(62) = 0.35, p = .73.  
+  
+We can use the t-test to calculate the standard error, because Mdif / t = SEM.
+
+```{r}
+0.017 / 0.35 #
+```
+
+Lakens et al (2018) begin by specifing a vague, uninformed model of H1. This model suggests that all outcomes between 0 and 1 considered fairly plausible, although smaller values more likely than larger values (see Figure 1).
+  
+
+![Martins et al, Bayes Factor (Uninformed)](/Users/neilmclatchie/Desktop/untitled folder/Example 1a 1.png)
+  
+
+We select "No" at the top, to tell the calcualtor that our prior model is not uniform (i.e., it does not assign equal probability to all possible outcomes). 
+  
+The top two boxes correspond to our data: we enter the obtained SE and the Mean difference. 
+  
+The last three boxes correspond to the model of H1. We specify its mode, standard deviation and whether it is one-tailed or two-tailed. As we believe that smaller effects are more likely than larger effects, we set the mode to 0 (we could set this to a small non-zero number, but it would make very little difference to the result of the Bayes factor, and zero is convenient). 
+  
+The Standard Deviation of the model of H1 can be thought of as the approximate scale of effect predicted by our theory. Sixty-eight percent of the area in our model will fall between 0 and our predicted effect size (1 SD), and 95% will fall within 0 and twice our predicted effect size (2 SD). And then by specifying that our model is one-tailed, our model makes a directional prediction.
+  
+Figure 1 shows that our obtained Bayes factor provides quite strong evidence for the null hypothesis, $B_{H(0, 0.50)} = 0.13$. It is also recommended that you specify the robustness regions, which identify the range of predicted effect sizes that would still lead to the same conclusions as our obtained Bayes factor (here, B > 3 counted as evidence for H1, B < 0.33 counted as evidence for H0). 
+  
+![Martins et al, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 1a 2.png)
+  
+![Martins et al, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 1a 3.png)
+  
+This Bayes factor with a vague model of H1 can be reported as $B_{H(0,0.50)}=0.13, Rob Reg [.19, ???]$. 
+  
+The upper limit is written using the infinity symbol because as the predicted effect size increased, the Bayes factor moved towards zero (in truth, the Bayes factor will never be exactly zero, but the calculator rounds down).
+    
+Lakens et al (2018) also tested a more informed model of H1, based on the results of a previous study conducted by Scheibe, Sheppes and Staudinger (2015). To do so, we need to calculate the result that Scheibe et al obtained:
+  
+
+```{r}
+0.405 - 0.485 # young - old
+```
+  
+It is important that the mean difference is calculated the same way as calculated for the data of interest (i.e., by subtracting old from young). Scheibe et al (2015) obtain a mean difference in the opposite direction; they obtain a negative value, whereas Martins et al. obtained a positive value.
+  
+To inform the calculator that the obtained result is in the opposite direction to the predicted result, you must enter the obtained mean difference as a negative value when entering it in to the calculator. It is always the obtained mean difference that is entered as a negative value, because you cannot specify Standard Deviations with a negative value. Figures 4-6 demonstrate how to calculate the Bayes factors and robustness regions for this more specific model of H1:
+
+![Martins et al, Bayes Factor (Informed)](/Users/neilmclatchie/Desktop/untitled folder/Example 1b 1.png)
+
+![Martins et al, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 1b 2.png)
+
+![Martins et al, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 1b 3.png)
+
+To be reported as: $B_{H(0,0.10)}=0.42, Rob Reg [0, 0.10]$. 
+
+
+## EXAMPLE 2: Shega, Tiedt, Grant and Dale (2014)
+Shega et al. (2014) examined the relationship between pain and age. They compared three groups. Here we calculate a Bayes factor for each of the three comparisons.   
+The process is identical to the previous example - first we calculate the mean difference and then divide it by t in order to derive the standard error. 
+  
+In this example, though, the authors did not report t-tests, so the t-tests have been calculated using the TOSTER R package which calculates Welch's t-test using the Ms, SDs, and Ns of each condition. Alternatively, you could use an online calculator to calculate the t-test (e.g., https://www.graphpad.com/quickcalcs/ttest1/?Format=SD - be sure to select 'Welch's Unpaired t test', which is appropriate in this example because the number of participants differ across conditions).
+  
+The authors did not have a directional hypothesis. For example, they didn't have a prediction about whether adults aged 62-69 would be in more or less pain than adults aged 70-79. This nondirectional hypothesis can modelled this using a two-tailed normal distribution (see Figured 7 - 15). By specifying that the mean of our prediction (third box down) is zero, we center the model on zero, such that small effects closre to zero are considered more plausible than larger effects that are further away from zero. 
+  
+The approximate range of effect (specified in the second box from the bottom of Figures 7 - 15) is based on the finding that 10-20% reductions on pain have been shown to be "noticeable", and reductions up to 40% shown to be "meaningful" (Dworkin et al., 2008). Twenty percent on a 7-point Likert scale corresponds to a change of 1.21. Using this as an approximate scale of effect thus predicts that raw effects up to 40% are plausible.
+  
+Figures 7-15 demonstrate how to calculate the Bayes factors and Robustness Regions for each of the three comparisons.
+  
+### Example 2a: Shega et al., 62-69 vs 70-79
+```{r}
+2.03 - 1.98
+0.05 / 0.4925451 # (t-test calculated from TOSTER package)
+```
+  
+![Example 2a: Shega et al., 62-69 vs 70-79 , Bayes Factor](/Users/neilmclatchie/Desktop/untitled folder/Example 2a 1.png)
+  
+![Example 2a: Shega et al., 62-69 vs 70-79, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2a 2.png)
+  
+![Example 2a: Shega et al., 62-69 vs 70-79, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2a 3.png)
+  
+Reported as: $B_{H(0,1.21)} = 0.09, Rob Reg [.33, \infty]$
+  
+### Example 2b: 62-69 vs 70-79
+```{r}
+2.14 - 1.98
+0.16 / 1.108473
+```
+
+![Example 2b: Shega et al., 70-79 vs 80+, Bayes Factor](/Users/neilmclatchie/Desktop/untitled folder/Example 2b 1.png)
+  
+![Example 2b: Shega et al., 70-79 vs 80+, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2b 2.png)
+  
+![Example 2b: Shega et al., 70-79 vs 80+, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2b 3.png)
+  
+Reported as: $B_{H(0,1.21)} = 0.22, Rob Reg [.77, \infty]$
+  
+### Example 2c: 62-69 vs 70-79
+```{r}
+2.14 - 2.03 #  
+0.11 / 0.7255117 # (t-test calculated from TOSTER package)
+```
+  
+![Example 2c: Shega et al., 62-69 vs 80+, Bayes Factor](/Users/neilmclatchie/Desktop/untitled folder/Example 2c 1.png)
+  
+![Example 2c: Shega et al., 62-69 vs 80+, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2c 2.png)
+  
+![Example 2c: Shega et al., 62-69 vs 80+, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 2c 3.png)
+  
+Reported as: $B_{H(0,1.21)} = 0.16, Rob Reg [.56, \infty]$
+  
+## EXAMPLE 3: # Westerhof, Bohlmeijer and McAdams (2017)
+Westerhof and colleagues obtain a non-significant correlation of r = .12 when comparing Openness with Despair. Does this constitute evidence for the null, evidence for H1, or is it inconclusive evidence?
+  
+Remember, Dienes' (2008) calcualtor assumes normality, and r violates this assumption. Fortunately it is easy to calculate the raw beta coefficients if one knows the standard deviations of the two variables. Westerhof et al. helpfully provided these, and so we can calculate the raw beta coefficients as follows:
+  
+```{r}
+0.14 * 0.8/0.6 
+0.12 * 1.0/0.6
+
+```
+  
+To calculate the standard error of this raw beta coefficient, we must first normalise r using Fisher's z transformation. When r <= .20, the transformation won't change the result very much. Fisher's z also has a known standard error: (1/???(N-3)). Here I use the FishersZ() function available in the DescTools R package, but you could alternatively use an online calculator (e.g., http://onlinestatbook.com/calculators/fisher_z.html).
+  
+```{r}
+library(DescTools)
+
+# Transform r to z
+FisherZ(.12)
+
+
+# Calculate SE
+1/sqrt(218-3)
+
+
+
+```
+  
+Having calculated Fisher's z and its SE, we can calculate a z-test:
+  
+```{r}
+0.12 / 0.068 # 1.76
+
+```
+  
+This will be the same z-score for our raw beta coefficient: .20 / SE = 1.76. Thus the standard error for our raw beta coefficient is:
+  
+```{r}
+.20 / 1.76 # 0.114
+```
+  
+Hence, we have a raw beta coefficient = .20 which has a standard error of .114. As usual, these values are entered in to the first two boxes of the Dienes (2008) calculator (see Figure 16). To know whether this data provides evidence for the sort of effect size considered to be evidential elsewhere in the same paper (r = .14, corresponding to beta = .19), we can therefore model the alternative hypothesis as a half-normal scaled using a predicted effect of .19:
+  
+![Example 3: Westerhof et al, Bayes factor](/Users/neilmclatchie/Desktop/untitled folder/Example 3 1.png)
+  
+![Example 3:  Westerhof et al, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 3 2.png)
+  
+![Example 3:  Westerhof et al, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 3 3.png)
+  
+Reported as: $B_{H(0,19)} = 2.98, Rob Reg [0, 2.98]$
+  
+## EXAMPLE 4: Spaniol, Schain and Bowen (2014)
+Spaniol et al (2014) examined whether anticipating a reward would enhance long-term memory formation equally well in older and younger individuals.
+Here we calculate the interaction effect (the "difference of differences") and it's standard error:
+  
+```{r}
+(0.77-0.76) - (0.76-0.750001) #  (YoungHigh - YoungLow) - (OldHigh - OldLow)
+1e-06 / 5.088219e-05 #  (t-test calculated from TOSTER function)
+```
+  
+Lakens et al (2018) specify the prior model using an effect size reported in Experiment 1 of the same paper:
+  
+```{r}
+(0.61-0.54) - (0.64-0.61) # 0.04
+```
+  
+We now have all the information needed to calculate a Bayes factor and its Robustness Regions (Figures 19-21).
+  
+![Example 4: Spaniol et al, Bayes Factor](/Users/neilmclatchie/Desktop/untitled folder/Example 4 1.png)
+  
+![Example 4: Spaniol et al, Minimum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 4 2.png)
+  
+![Example 4: Spaniol et al, Maximum Robustness Region](/Users/neilmclatchie/Desktop/untitled folder/Example 4 3.png)
+  
+Reported as: $B_{H(0,0.04)} = 0.44, Rob Reg [0, 0.05]$
+  
+## ESTIMATING SAMPLE SIZE
+Instructional video available at: https://www.youtube.com/watch?v=10Lsm_o_GRg
+
+Consider a researcher who aims to determine whether frail older adults demonstrate cognitive deficits relative to 11.5 nonfrail older adults. How many participants should the researcher expect to recruit in order to obtain conclusive evidence? Here, "conclusive evidence" is taken to mean B >= 3 or B <= 0.33.
+  
+The researcher could use the result of previous research, as well as its standard error, to determine exactly how many participants would need to be collected, first assuming H0 is true and then assuming H1 is true, before the evidence meets the threshold.
+  
+### Previous Research
+Bunce, Batterham & Mackinnon (2018) reported that non-frail adults (M=11.53, SD=3.52, N=304) recalled significantly more names of animals than frail adults (M=10.11, SD=3.20, N=154), t(456) = 4.20, p < .001.
+
+We can start by calculating the standard error implicitly reported by Bunce et al (2018):
+```{r}
+bunce.se <- (11.53-10.11) / 4.20 # Calculated from Mdif / t
+```
+  
+In order to calculate the standard error for different sample sizes, we will need to calculate the total number of participants recruited by Bunce et al (2018):
+```{r}
+bunce.n <- 304+154 # 458
+```
+  
+The predicted effect size for the replication is provided by the effect size reported by Bunce et al:
+```{r}
+bunce.mdif <- 11.53-10.11 # 1.42
+obtain.h1 <- bunce.mdif
+```
+  
+Notice we also create a variable called 'obtain.h1' which is identical to the effect size we are predicting. This is because we will shortly be calculating Bayes factors for varying levels of N, while assuming that our data obtained the exact predicted effec size. We will also be doing the same assuming for the null:
+
+```{r}
+# Predicted effect size for H0 (here = 0)
+obtain.h0 <- 0
+```
+
+
+### Sample size estimation
+The research needs to decide what the maximum number of participants they could recruit is. In this case, lets assume the researcher could recruit up to 250. We do this by creating a sequence of numbers ranging from 2-250 that increase by 1:
+  
+```{r}
+# Number of subjects we are willing to test
+n = seq(2, 250, 1)
+nmax=250-2 # 248
+```
+  
+Next, we calculate the standard error for each of of these sample sizes. Notice that the standard error varies as a function of the square root of n, or in this case, the change in the magnitude of n:
+  
+```{r}
+se_diff = (bunce.se) * sqrt(bunce.n / n) 
+```
+  
+We can now calculate Bayes factors for each sample size ranging from 2 to 250 participants. Start by running the Bayes factor function from Dienes and McLatchie (2018):
+
+```{r}
+## Run the Bayes factor t-distribution function from Dienes and McLatchie (2018)
+Bft<-function(sd, obtained, dfdata, meanoftheory, sdtheory, dftheory, tail = 2)
+{
+  area <- 0
+  normarea <- 0
+  theta <- meanoftheory - 10 * sdtheory
+  incr <- sdtheory/200
+  for (A in -2000:2000){
+    theta <- theta + incr
+    dist_theta <- dt((theta-meanoftheory)/sdtheory, df=dftheory)
+    if(identical(tail, 1)){
+     if (theta <= 0){
+      dist_theta <- 0
+    } else {
+       dist_theta <- dist_theta * 2
+    }
+    }
+    height <- dist_theta * dt((obtained-theta)/sd, df = dfdata)
+    area <- area + height * incr
+    normarea <- normarea + dist_theta*incr
+    }
+  LikelihoodTheory <- area/normarea
+  Likelihoodnull <- dt(obtained/sd, df = dfdata)
+  BayesFactor <- LikelihoodTheory/Likelihoodnull
+  BayesFactor
+  }
+
+```
+
+First we calculate Bayes factors assuming that the mean difference obtained our our future study will be zero, thereby supporting the null hypothesis:
+```{r}
+x <- 1/Bft(se_diff , obtain.h0  , n-1, meanoftheory=0, sdtheory=bunce.mdif, dftheory=100000, tail=1)
+x
+```
+  
+By counting the Bayes factors until we identify where B becomes greater than 3, we can identify the number of participants required. It is important to remember that first Bayes factor reported was calculated using 2 participants. Don't forget to add an extra participant on after counting the Bayes factors.
+  
+In this case, the researcher would need 207 participants before they would obtain support for the null, assuming they find support for the null.
+  
+Now we can do the same for the alternative hypothesis:
+  
+```{r}
+y <- Bft(se_diff , obtain.h1  , n-1, meanoftheory=0, sdtheory=bunce.mdif, dftheory=100000, tail=1)
+y
+```
+  
+We see that we would require 82 participants before we conclude there is sufficient evidence for the alternative hypothesis, assuming that we obtain results supporting the alternative hypothesis.
+
+### Plotting the Sample Size Estimation
+  
+The following code will plot the estimation:
+  
+`````{r}
+plot(x = x,
+     type = "l",                            # Specify that you want to plot a line graph
+     lwd = 2,                               # Thickness of line
+     lty = 2,
+     col = "black",                          # Colour of line
+     xlim=c(0,250),                          # Set limit of x-axis
+     ylim=c(0,10),                         # Set limit of y-axis
+     frame.plot=TRUE,                       # Do plot the frame of the graph
+     xlab="Sample Size",                    # Title for x-axis
+     ylab= "Bayes Factor",                             # Title for y-axis
+     axes = FALSE,                          # Don't plot the scales by default
+     main=paste("Estimating Sample Size for Bayes Factors"))     # Main title
+segments(0, 3, 250, 3, col= 'black', lwd=2, lty=1)          # Add a black horizontal line
+lines(y[y<10 ], lwd=2, lty=3)
+Axis(side=1,at=seq(0, 250, by = 10))
+Axis(side=2,at=seq(0,10, by=1))
+legend(0,10,legend=c("B for H0 (Mdiff = 0)","B for H1 (Mdiff = 1.42)", "Threshold for sensitive test (B = 3)"),
+       text.col="black", lty = c(2,3,1))
+```
+
+
+
+
+
+
+
+
